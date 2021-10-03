@@ -1,6 +1,6 @@
 package com.example.javadroid;
 
-public class Shape {
+public abstract class Shape {
     private int x;
     private int y;
 }
