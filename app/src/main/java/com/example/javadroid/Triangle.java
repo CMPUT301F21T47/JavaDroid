@@ -1,7 +1,6 @@
 package com.example.javadroid;
 
 public class Triangle extends Shape{
-    // This is a triangle
     private int base;
     private int height;
 
