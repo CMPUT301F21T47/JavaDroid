@@ -1,4 +1,4 @@
-package com.example.javadroid;
+package com.example.habitshare;
 
 import org.junit.Test;
 
