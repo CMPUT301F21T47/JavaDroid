@@ -4,6 +4,8 @@ package com.example.habitshare;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,37 +43,76 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = enterEmail.getText().toString();
-                String password = enterPassword.getText().toString();
-                collectionReference.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot userDocument = task.getResult();
-                            if (userDocument.exists()) {
-                                Log.d(TAG, "DocumentSnapshot data: " + userDocument.getData());
-                                final String cloudPassword = userDocument.getString("Password");
-                                if(password.equals(cloudPassword)){
-                                    finish();
-                                }
-                                else{
+                final String email = enterEmail.getText().toString();
+                final String password = enterPassword.getText().toString();
+                Log.d(TAG, "Password is " + password);
 
+                if(email.equals("")){
+                    enterEmail.setError("Email address cannot be empty");
+                }
+                if(password.equals("")){
+                    enterPassword.setError("Password cannot be empty");
+                }
+
+                if(!email.equals("") && !password.equals("")){
+                    collectionReference.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot userDocument = task.getResult();
+                                if (userDocument.exists()) {
+                                    Log.d(TAG, "DocumentSnapshot data: " + userDocument.getData());
+                                    final String cloudPassword = userDocument.getString("Password");
+
+                                    if(password.equals(cloudPassword)){
+                                        Log.d(TAG, "Before set result");
+                                        Intent passBack = new Intent();
+                                        passBack.putExtra("email_from_login", email);
+                                        setResult(RESULT_OK, passBack);
+                                        Log.d(TAG, "After set result");
+                                        finish();
+                                    }
+                                    else{
+                                        wrongPassword();
+                                    }
+                                } else {
+                                    Log.d(TAG, "No such document");
+                                    wrongEmail();
                                 }
                             } else {
-                                Log.d(TAG, "No such document");
+                                Log.d(TAG, "get failed with ", task.getException());
                             }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
                         }
-                    }
-                });
+                    });
+                }
+
+            }
+        });
+
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registration = new Intent(getApplicationContext(), RegistrationActivity.class);
+                startActivity(registration);
             }
         });
     }
 
+    /**
+     * Deal with wrong email address
+     */
+    private void wrongEmail(){
+        enterPassword.setText("");
+        enterEmail.setError("The email address you have entered is in correct or does not exist. Please try again.");
+    }
+
+    /**
+     * Deal with wrong password
+     */
     private void wrongPassword(){
         enterPassword.setText("");
         enterPassword.setError("The password you have entered is incorrect. Please try again or reset your password.");
     }
 }
+
 

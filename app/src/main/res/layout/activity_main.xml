@@ -10,10 +10,23 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="246dp"
-        android:layout_height="205dp"
-        android:text="welcome to use habit share"
-        android:textSize="48sp"
+        android:layout_width="344dp"
+        android:layout_height="62dp"
+        android:text="Welcome to use habit share"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.123" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="341dp"
+        android:layout_height="289dp"
+        android:text="TextView"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
