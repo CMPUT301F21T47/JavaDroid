@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity";
     TextView displayUserName;
     DocumentSnapshot userDocument;
+    boolean firstTimeLogin = true;
 
     private ActivityResultLauncher<Intent> mGetContent;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startLogin();
+
 
         /* ------------------------------------------------------------------- */
         // This part is for demonstration only!
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
                                 displayUserName.setText(userinfo);
                                 /* ------------------------------------------------------------------- */
 
+                                firstTimeLogin = false;
+
                             } else {
                                 Log.d(TAG, "No such document");
 
@@ -93,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
+        }
+
+        if(resultCode == RESULT_CANCELED && firstTimeLogin){
+            // If it is the first time login, then close the app when the user press the "return" button
+            // This prevents the user from skipping the login step, and directly go to the MainActivity
+            finish();
         }
     }
 

@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText enterEmail;
     EditText enterPassword;
     FirebaseFirestore db;
+    LoadingDialog loadAnimation;
     final static String TAG = "LoginActivity";
 
 
@@ -36,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         signup = findViewById(R.id.sign_up_textview);
         enterEmail = findViewById(R.id.login_enter_email);
         enterPassword = findViewById(R.id.login_enter_password);
+        loadAnimation = new LoadingDialog(LoginActivity.this);
+
 
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("UserData");
@@ -53,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(password.equals("")){
                     enterPassword.setError("Password cannot be empty");
                 }
-
-                if(!email.equals("") && !password.equals("")){
+                loadAnimation.startLoadingDialog();
+                if(!email.equals("")){
                     collectionReference.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -63,24 +66,29 @@ public class LoginActivity extends AppCompatActivity {
                                 if (userDocument.exists()) {
                                     Log.d(TAG, "DocumentSnapshot data: " + userDocument.getData());
                                     final String cloudPassword = userDocument.getString("Password");
-
                                     if(password.equals(cloudPassword)){
                                         Log.d(TAG, "Before set result");
                                         Intent passBack = new Intent();
                                         passBack.putExtra("email_from_login", email);
                                         setResult(RESULT_OK, passBack);
                                         Log.d(TAG, "After set result");
+                                        loadAnimation.dismissLoadingDialog();
                                         finish();
                                     }
                                     else{
+                                        loadAnimation.dismissLoadingDialog();
                                         wrongPassword();
                                     }
                                 } else {
                                     Log.d(TAG, "No such document");
+                                    loadAnimation.dismissLoadingDialog();
                                     wrongEmail();
                                 }
                             } else {
                                 Log.d(TAG, "get failed with ", task.getException());
+                                loadAnimation.dismissLoadingDialog();
+                                showToast("Error: Failed to get data");
+
                             }
                         }
                     });
@@ -102,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
      * Deal with wrong email address
      */
     private void wrongEmail(){
-        enterPassword.setText("");
         enterEmail.setError("The email address you have entered is in correct or does not exist. Please try again.");
     }
 
@@ -110,8 +117,15 @@ public class LoginActivity extends AppCompatActivity {
      * Deal with wrong password
      */
     private void wrongPassword(){
-        enterPassword.setText("");
         enterPassword.setError("The password you have entered is incorrect. Please try again or reset your password.");
+    }
+
+    /**
+     * Make a toast (short)
+     * @param str a toast message
+     */
+    private void showToast(String str){
+        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
     }
 }
 

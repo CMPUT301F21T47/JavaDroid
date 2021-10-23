@@ -25,18 +25,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 
 public class RegistrationActivity extends AppCompatActivity {
+    String userName;
     String email;
     String password;
     String password2;
-    String userName;
     EditText emailEdittext;
     EditText passwordEdittext;
     EditText password2Edittext;
     EditText userNameEdittext;
+    LoadingDialog loadAnimation;
     Button registerButton;
     FirebaseFirestore db;
     String specialCharacters = "!@#$%^&*()";
-    boolean emailExits;
     final static String TAG = "RegistrationActivity";
 
 
@@ -50,6 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
         password2Edittext = findViewById(R.id.register_reenter_password);
         userNameEdittext = findViewById(R.id.register_enter_username);
         registerButton = findViewById(R.id.register_button);
+        loadAnimation = new LoadingDialog(RegistrationActivity.this);
 
         Log.d(TAG, "Before loading the database");
         db = FirebaseFirestore.getInstance();
@@ -63,7 +64,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 password = passwordEdittext.getText().toString();
                 password2 = password2Edittext.getText().toString();
                 userName = userNameEdittext.getText().toString();
-                emailExits = false;
 
                 // Check input validity
                 if(email.equals("")){
@@ -90,69 +90,53 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
 
                 // Check if the email has been taken
-                if(!email.equals("")){
+                if(!email.equals("")) {
                     collectionReference.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot userDocument = task.getResult();
+                                assert userDocument != null;
                                 if (userDocument.exists()) {
                                     Log.d(TAG, "DocumentSnapshot data: " + userDocument.getData());
                                     emailEdittext.setError("This email address has been taken. Please try with another one.");
                                 }
                                 else {
                                     Log.d(TAG, "No such document");
-                                    emailExits = false;
-                                    HashMap<String, String> data = new HashMap<>();
-                                    data.put("Password", password);
-                                    data.put("UserName", userName);
-                                    collectionReference.document(email)
-                                            .set(data)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Log.d(TAG, "Data has been added successfully!");
-                                                    showToast("Registration complete");
-                                                    finish();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.d(TAG, "Data could not be added!" + e.toString());
-                                                }
-                                            });
+                                    // If everything is fine, then we complete a successful registration
+                                    Log.d(TAG, "Before the if statement");
+                                    if(isValidEmail(email) && isValidPassword(password) && !userName.equals("") && password.equals(password2)){
+                                        Log.d(TAG, "Everything is fine");
+                                        loadAnimation.startLoadingDialog();
+                                        HashMap<String, String> data = new HashMap<>();
+                                        data.put("Password", password);
+                                        data.put("UserName", userName);
+                                        collectionReference.document(email)
+                                                .set(data)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        Log.d(TAG, "Data has been added successfully!");
+                                                        loadAnimation.dismissLoadingDialog();
+                                                        showToast("Registration complete");
+                                                        finish();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.d(TAG, "Data could not be added!" + e.toString());
+                                                        loadAnimation.dismissLoadingDialog();
+                                                        showToast("Error: Cannot add this user profile!");
+                                                    }
+                                                });
+                                    }
                                 }
-                            }
-                            else {
+                            } else {
                                 Log.d(TAG, "get failed with ", task.getException());
                             }
                         }
                     });
-                }
-
-                // If everything is fine, then we complete a successful registration
-                if(isValidEmail(email) && isValidPassword(email) && !userName.equals("")){
-                    Log.d(TAG, "Everything is fine");
-                    HashMap<String, String> data = new HashMap<>();
-                    data.put("Password", password);
-                    data.put("Username", userName);
-                    collectionReference.document(email)
-                            .set(data)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG, "Data has been added successfully!");
-                                    showToast("Registration complete");
-                                    finish();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "Data could not be added!" + e.toString());
-                                }
-                            });
                 }
 
 
