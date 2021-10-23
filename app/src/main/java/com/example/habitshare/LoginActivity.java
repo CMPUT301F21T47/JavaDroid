@@ -46,6 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Clear the error message
+                enterEmail.setError(null);
+                enterPassword.setError(null);
+
                 final String email = enterEmail.getText().toString();
                 final String password = enterPassword.getText().toString();
                 Log.d(TAG, "Password is " + password);
@@ -56,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(password.equals("")){
                     enterPassword.setError("Password cannot be empty");
                 }
-                loadAnimation.startLoadingDialog();
                 if(!email.equals("")){
+                    loadAnimation.startLoadingDialog();
                     collectionReference.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -100,6 +104,11 @@ public class LoginActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Set to edittext box to default value
+                enterEmail.setText("");
+                enterPassword.setText("");
+                enterEmail.setError(null);
+                enterPassword.setError(null);
                 Intent registration = new Intent(getApplicationContext(), RegistrationActivity.class);
                 startActivity(registration);
             }

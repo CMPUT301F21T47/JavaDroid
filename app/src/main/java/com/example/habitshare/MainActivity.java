@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     TextView displayUserName;
     DocumentSnapshot userDocument;
     boolean firstTimeLogin = true;
+    LoadingDialog loadAnimation;
 
     private ActivityResultLauncher<Intent> mGetContent;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // This part is for demonstration only!
         displayUserName = findViewById(R.id.textView4);
         /* ------------------------------------------------------------------- */
-
+        loadAnimation = new LoadingDialog(MainActivity.this);
     }
 
     /**
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && data != null) {
+            loadAnimation.startLoadingDialog();
             if (resultCode == RESULT_OK) {
                 Log.d(TAG, "Return succeed");
                 email = data.getStringExtra("email_from_login");
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
+            loadAnimation.dismissLoadingDialog();
         }
 
         if(resultCode == RESULT_CANCELED && firstTimeLogin){
