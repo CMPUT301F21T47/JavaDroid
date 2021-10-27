@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="dateFormatText" type="id" />
+    <item name="editTextDateStarted" type="id" />
+    <item name="editConfirmButton" type="id" />
+    <item name="editTextName" type="id" />
+    <item name="editTextFrequency" type="id" />
+    <item name="characterLimit" type="id" />
+    <item name="editTextFrequencyUnits" type="id" />
+    <item name="frequencyNumbers" type="id" />
+    <item name="frequencyUnitsText" type="id" />
+    <item name="editTextDescription" type="id" />
+    <item name="habitInfoDate" type="id" />
+    <item name="habitInfoFrequency" type="id" />
+    <item name="habitInfoPer" type="id" />
+    <item name="habitInfoEditButton" type="id" />
+    <item name="habitInfoBackButton" type="id" />
+    <item name="habitInfoDenoteButton" type="id" />
+    <item name="habitInfoDeleteButton" type="id" />
+    <item name="habitInfoHabitName" type="id" />
+    <item name="habitInfoFrequencyUnits" type="id" />
+    <item name="habitInfoReason" type="id" />
+</resources>
