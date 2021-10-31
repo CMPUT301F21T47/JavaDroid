@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JavaDroid</string>
+    <string name="app_name">HabitShare</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -18,4 +18,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="today_s_habits">Today\'s Habits</string>
+    <string name="my_habits">My Habits</string>
+    <string name="habit_events">Habit Events</string>
+    <string name="habit_space">Habit Space</string>
+    <string name="friend_requests">Friend Requests</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

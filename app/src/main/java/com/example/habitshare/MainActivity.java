@@ -10,13 +10,20 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     DocumentSnapshot userDocument;
     boolean firstTimeLogin = true;
     LoadingDialog loadAnimation;
+    DrawerLayout drawerLayout;
+    ImageView menuButton;
+    NavigationView navigationView;
+    NavController navController;
 
     private ActivityResultLauncher<Intent> mGetContent;
 
@@ -39,14 +50,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startLogin();
 
+        drawerLayout = findViewById(R.id.drawer_layout);
+        menuButton = findViewById(R.id.image_menu);
+        navigationView = findViewById(R.id.navigation_view);
+        navController = Navigation.findNavController(this, R.id.navHostFragment);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
-        /* ------------------------------------------------------------------- */
-        // This part is for demonstration only!
-        displayUserName = findViewById(R.id.textView4);
-        /* ------------------------------------------------------------------- */
+        //startLogin();
+
         loadAnimation = new LoadingDialog(MainActivity.this);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+//        navigationView.setItemIconTintList(null);
     }
 
     /**

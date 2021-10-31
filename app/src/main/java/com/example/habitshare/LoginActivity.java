@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
      * Deal with wrong email address
      */
     private void wrongEmail(){
-        enterEmail.setError("The email address you have entered is in correct or does not exist. Please try again.");
+        enterEmail.setError("The email address you have entered is incorrect or does not exist. Please try again.");
     }
 
     /**
