@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_my_habits">
+
+
+    <fragment
+        android:id="@+id/nav_my_habits"
+        android:name="com.example.habitshare.MyHabitFragment"
+        android:label="My Habits"
+        tools:layout="@layout/fragment_my_habits" />
+    <fragment
+        android:id="@+id/nav_habit_events"
+        android:name="com.example.habitshare.HabitEventsFragment"
+        android:label="Habit Events"
+        tools:layout="@layout/fragment_habit_events" />
+
+</navigation>
