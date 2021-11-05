@@ -122,11 +122,11 @@ public class MyHabitFragment extends Fragment{
 //        return fragment;
 //    }
 //
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -150,19 +150,20 @@ public class MyHabitFragment extends Fragment{
 
         Log.d(TAG, "email is"+ MainActivity.email);
 
+        // switch between all habits and today's habits
         switchTodayAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // use different data list for the adapter depending on which mode the user want
                 if(isChecked){
                     isViewTodayOnly = true;
                     updateTodayHabitList();
                     habitAdapter = new CustomHabitListAdapter(getContext(), todayHabitDataList);
-                    habitList.setAdapter(habitAdapter);
                 }
                 else{
                     habitAdapter = new CustomHabitListAdapter(getContext(), habitDataList);
-                    habitList.setAdapter(habitAdapter);
                 }
+                habitList.setAdapter(habitAdapter);
             }
         });
 
@@ -184,7 +185,9 @@ public class MyHabitFragment extends Fragment{
         return view;
     }
 
-
+    /**
+     * starts an add habit dialog
+     */
     private void showAddHabitDialog(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -207,6 +210,7 @@ public class MyHabitFragment extends Fragment{
         final CollectionReference collectionReference = db.collection("UserData")
                 .document(MainActivity.email)
                 .collection("Habits");
+
         setDate();
 
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +222,8 @@ public class MyHabitFragment extends Fragment{
                 Habit habit = new Habit(habitTitle, date);
                 setSelectedDays(habit);
                 daysOfWeek = habit.getSelectDayOfWeek();
+
+                // Check constraints of user input
                 if(habitTitle.equals("")){
                     enterHabitTitle.setError("Habit Title cannot be empty");
                     checkConfirmCondition = false;
@@ -264,12 +270,12 @@ public class MyHabitFragment extends Fragment{
                                     Log.d(TAG, "Data could not be added!" + e.toString());
                                 }
                             });
-
-                    dialog.dismiss();
+                    dialog.dismiss(); // close dialog only if all inputs are valid
                 }
 
             }
         });
+
         cancelAddHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,18 +304,21 @@ public class MyHabitFragment extends Fragment{
         final CollectionReference collectionReference = db.collection("UserData")
                 .document(MainActivity.email)
                 .collection("Habits");
-        Habit habit = habitDataList.get(i);
 
+        // set texts according to the attributes of the selected habit.
+        Habit habit = habitDataList.get(i);
         habitTitle = habit.getTitle();
         viewHabitTitle.setText(habit.getTitle());
         viewDate.setText(habit.getDate());
         viewDaysOfWeek.setText(habit.getSelectDayOfWeek());
         viewReason.setText(habit.getReason());
 
+        // if a habit has been done this week then there shouldn't be a denote button for this habit
         if(habit.getStatus()){
             denoteHabit.setVisibility(View.INVISIBLE);
         }
 
+        // define behaviors of all four buttons
         denoteHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -347,12 +356,20 @@ public class MyHabitFragment extends Fragment{
         dialog.show();
     }
 
+    /**
+     * start an add habit event dialog, there will be a corresponding change in the HabitEventFragment
+     */
     private void showAddHabitEventDialog(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.add_habit_event_layout);
-        Log.d(TAG, "Opened AddHabitEventDialog");
+
+        TextView denoteHabitName = dialog.findViewById(R.id.denote_habit_name);
+        EditText enterComment = dialog.findViewById(R.id.denote_habit_comment);
+        Button confirmDenote = dialog.findViewById(R.id.denote_habit_confirm_button);
+        Button cancelDenote = dialog.findViewById(R.id.denote_habit_cancel_button);
+
         final CollectionReference collectionReference1 = db.collection("UserData")
                 .document(MainActivity.email)
                 .collection("Habit Events");
@@ -362,13 +379,9 @@ public class MyHabitFragment extends Fragment{
 
         habit = habitDataList.get(i);
 
+        // get current date to keep a record on the denote date
         Calendar cal = Calendar.getInstance();
         currentDate = DateFormat.getDateInstance().format(cal.getTime());
-
-        TextView denoteHabitName = dialog.findViewById(R.id.denote_habit_name);
-        EditText enterComment = dialog.findViewById(R.id.denote_habit_comment);
-        Button confirmDenote = dialog.findViewById(R.id.denote_habit_confirm_button);
-        Button cancelDenote = dialog.findViewById(R.id.denote_habit_cancel_button);
 
         denoteHabitName.setText(habit.getTitle());
 
@@ -376,6 +389,8 @@ public class MyHabitFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 final String comment = enterComment.getText().toString();
+
+                // Check user input constraint
                 if(comment.length() > 20){
                     enterComment.setError("A comment cannot have more than 20 characters");
                 }
@@ -385,6 +400,7 @@ public class MyHabitFragment extends Fragment{
                     final String daysOfWeek = habit.getSelectDayOfWeek();
                     final String reason = habit.getReason();
 
+                    // add a new habit event
                     HashMap<String, String> data = new HashMap<>();
                     data.put("Comment", comment);
                     data.put("Denote Date", currentDate);
@@ -403,6 +419,8 @@ public class MyHabitFragment extends Fragment{
                                     Log.d(TAG, "Data could not be added!" + e.toString());
                                 }
                             });
+
+                    // set the habit status to Done
                     data = new HashMap<>();
                     data.put("Date of Start", date);
                     data.put("Days of Week", daysOfWeek);
@@ -425,8 +443,6 @@ public class MyHabitFragment extends Fragment{
                     habit.setStatus(true);
                     dialog.dismiss();
                 }
-
-
             }
         });
 
@@ -441,6 +457,9 @@ public class MyHabitFragment extends Fragment{
     }
 
 
+    /**
+     * start an edit habit dialog
+     */
     private void showEditHabitDialog(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -470,11 +489,11 @@ public class MyHabitFragment extends Fragment{
         date = habit.getDate();
         boolean[] daysOfWeekList = habit.getSelectDayOfWeekList();
         reason= habit.getReason();
-        // set original detail
+
+        // set original details
         enterHabitTitle.setText(habitTitle);
         enterReason.setText(reason);
         dateView.setText(date);
-
         for(int j = 0; j < daysOfWeekList.length; j++){
             if (daysOfWeekList[j]) {
                 switch (j) {
@@ -502,7 +521,7 @@ public class MyHabitFragment extends Fragment{
             }
         }
 
-        // set modified detail
+        // set edited details
         setDate();
         setSelectedDays(habit);
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -577,6 +596,7 @@ public class MyHabitFragment extends Fragment{
 
             }
         });
+
         cancelAddHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -588,7 +608,9 @@ public class MyHabitFragment extends Fragment{
     }
 
 
-
+    /**
+     * Change the data list when a change occurred in the cloud
+     */
     private void setCollectionReferenceAddSnapshotListener(){
         Log.d(TAG, "email is" + MainActivity.email);
         final CollectionReference collectionReference = db.collection("UserData")
@@ -620,7 +642,6 @@ public class MyHabitFragment extends Fragment{
 
                             if(habitTitle != null && date != null &&  daysOfWeek != null && reason != null && habitStatus != null){
                                 status = !habitStatus.equals("Not Done");
-
                                 Habit habit = new Habit(habitTitle, date, reason, daysOfWeek);
                                 habit.setStatus(status);
                                 habitDataList.add(habit); // Adding the cities and provinces from FireStore
@@ -640,6 +661,9 @@ public class MyHabitFragment extends Fragment{
     }
 
 
+    /**
+     * Allows an activity or fragment to use the android built-in date picker
+     */
     private void setDate(){
         /* This function will implement selecting a date from the android built-in DatePickerDialog.
          *  The approach is adapted from https://www.youtube.com/watch?v=hwe1abDO2Ag */
@@ -691,10 +715,12 @@ public class MyHabitFragment extends Fragment{
 
             }
         };
-
-
-
     }
+
+    /**
+     * Set selected days of a habit from checkboxes
+     * @param habit a class the represents a user's habit
+     */
     private void setSelectedDays(Habit habit){
         if(monCheckBox.isChecked()){
             habit.selectDayOfWeek(0);
@@ -719,6 +745,10 @@ public class MyHabitFragment extends Fragment{
         }
     }
 
+    /**
+     * This will update today's habit list.
+     * It simply filters out all the habit that don't have to be done in this day of week.
+     */
     private void updateTodayHabitList(){
         todayHabitDataList.clear();
         Calendar cal = Calendar.getInstance();
