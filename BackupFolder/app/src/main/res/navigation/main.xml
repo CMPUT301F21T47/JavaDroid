@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/today_event">
+    <fragment
+        android:id="@+id/today_event"
+        android:name="com.example.habitshare.TodayHabitFragment"
+        android:label="fragment_today_habit"
+        tools:layout="@layout/fragment_today_habit" />
+    <fragment
+        android:id="@+id/my_habits"
+        android:name="com.example.habitshare.MyHabitsFragment"
+        android:label="fragment_my_habits"
+        tools:layout="@layout/fragment_my_habits" />
+    <fragment
+        android:id="@+id/habit_events"
+        android:name="com.example.habitshare.HabitEventsFragment"
+        android:label="fragment_habit_events"
+        tools:layout="@layout/fragment_habit_events" />
+    <fragment
+        android:id="@+id/habit_space"
+        android:name="com.example.habitshare.HabitSpaceFragment"
+        android:label="fragment_habit_space"
+        tools:layout="@layout/fragment_habit_space" />
+    <fragment
+        android:id="@+id/friend_requests"
+        android:name="com.example.habitshare.FriendRequestsFragment"
+        android:label="fragment_friend_requests"
+        tools:layout="@layout/fragment_friend_requests" />
+</navigation>
