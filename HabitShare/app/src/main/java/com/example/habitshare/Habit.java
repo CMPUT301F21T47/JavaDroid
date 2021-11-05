@@ -1,9 +1,9 @@
 package com.example.habitshare;
 
-import static java.security.AccessController.getContext;
 
-import android.widget.Toast;
-
+/**
+ * A class that represents the user's habit
+ */
 public class Habit {
     private String date;
     private String title;
@@ -12,6 +12,11 @@ public class Habit {
     private boolean[] daysOfWeekList = new boolean[7];
     private boolean status;
 
+    /**
+     * Habit constructor
+     * @param title habit title
+     * @param date date of start
+     */
     Habit(String title, String date){
         for(int i = 0; i < 7; i++){
             this.daysOfWeekList[i] = false;
@@ -23,6 +28,13 @@ public class Habit {
         this.status = false;
     }
 
+    /**
+     * Habit constructor
+     * @param title habit title
+     * @param date date of start
+     * @param reason reason of habit
+     * @param daysOfWeek which days of a week to do the habit
+     */
     Habit(String title, String date, String reason, String daysOfWeek){
         this.title = title;
         this.date = date;
@@ -80,58 +92,112 @@ public class Habit {
         }
     }
 
+    /**
+     * Date getter
+     * @return date to start of a habit
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * status getter
+     * @return a boolean value indicating this habit has been done in this week or not
+     */
     public boolean getStatus() {
         return status;
     }
 
+    /**
+     * Status setter,set the status into either true or false
+     * @param status a boolean value indicating this habit has been done in this week or not
+     */
     public void setStatus(boolean status) {
         this.status = status;
     }
 
+    /**
+     * date setter
+     * @param date date to start of a habit
+     */
     public void setDate(String date) {
-        date = date;
+        this.date = date;
     }
 
+    /**
+     * habit title getter
+     * @return the title of the habit
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * habit title setter
+     * @param title the title of the habit
+     */
     public void setTitle(String title) {
-        title = title;
+        this.title = title;
     }
 
+    /**
+     * habit reason getter
+     * @return a string that contains the reason for a habit
+     */
     public String getReason() {
         return reason;
     }
 
+    /**
+     * habit reason setter
+     * @param reason a string that contains the reason for a habit
+     */
     public void setReason(String reason) {
         this.reason = reason;
     }
 
+    /**
+     * see if a habit is set to public or not
+     * @return true if the habit is public; false otherwise
+     */
     public boolean getIsDisclosed(){
         return isDisclosed;
     }
 
+    /**
+     * make a habit to be public
+     */
     public void setPublic(){
         this.isDisclosed = true;
     }
 
+    /**
+     * make a habit to be private
+     */
     public void setPrivate(){
         this.isDisclosed = false;
     }
 
+    /**
+     * set a specific day of week to be done of a habit
+     * @param position a position from 0-6 corresponds to Monday to Sunday
+     */
     public void selectDayOfWeek(int position){
         this.daysOfWeekList[position] = true;
     }
 
+    /**
+     * redo the selection of a specific day of week to be done of a habit
+     * @param position a position from 0-6 corresponds to Monday to Sunday
+     */
     public void unselectDayOfWeek(int position){
         this.daysOfWeekList[position] = false;
     }
 
+    /**
+     * Convert the boolean list into a string of selected days of week
+     * @return a string of selected days of a week
+     */
     public String getSelectDayOfWeek(){
         String days = "";
         String dayString = "";
@@ -170,11 +236,19 @@ public class Habit {
         return days;
     }
 
+    /**
+     * Self-explanatory
+     * @return a boolean list that indicates the selected days of week
+     */
     public boolean[] getSelectDayOfWeekList(){
         return daysOfWeekList;
     }
 
-    public boolean changeStatus(){
-        return !status;
+
+    /**
+     * flip the status
+     */
+    public void changeStatus(){
+        this.status = !status;
     }
 }

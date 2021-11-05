@@ -73,7 +73,9 @@ public class HabitEventsFragment extends Fragment {
         return view;
     }
 
-
+    /**
+     * start a view habit event dialog
+     */
     private void showViewHabitEventDialog(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -112,10 +114,12 @@ public class HabitEventsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final String habitTitle = habitEvent.getTitle();
+                // remove the habit event
                 collectionReference
                         .document(habitTitle)
                         .delete();
 
+                // set the status of the habit to Not Done
                 collectionReference2.document(habitTitle).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -149,31 +153,6 @@ public class HabitEventsFragment extends Fragment {
                         }
                     }
                 });
-
-//                        String habitTitle = doc.getId();
-//                        String date = (String) doc.getData().get("Date of Start");
-//                        String daysOfWeek = (String) doc.getData().get("Days of Week");
-//                        String reason = (String) doc.getData().get("Reason");
-//                        HashMap<String, String> data = new HashMap<>();
-//                        data.put("Date of Start", date);
-//                        data.put("Reason", reason);
-//                        data.put("Days of Week", daysOfWeek);
-//                        data.put("Status", "Not Done");
-//                        collectionReference2.document(habitTitle)
-//                                .set(data)
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//                                        Log.d(TAG, "Data has been added successfully!");
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.d(TAG, "Data could not be added!" + e.toString());
-//                                    }
-
-
                 dialog.dismiss();
             }
         });
@@ -188,6 +167,9 @@ public class HabitEventsFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * start an edit habit event dialog
+     */
     private void showEditHabitEventDialog(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -258,7 +240,9 @@ public class HabitEventsFragment extends Fragment {
         dialog.show();
     }
 
-
+    /**
+     * Change the data list when a change occurred in the cloud
+     */
     private void setCollectionReferenceAddSnapshotListener(){
         Log.d(TAG, "email is " + MainActivity.email);
         final CollectionReference collectionReference = db.collection("UserData")
@@ -279,7 +263,7 @@ public class HabitEventsFragment extends Fragment {
                         String habitTitle = doc.getId();
                         // Log.d(TAG, "habit title is "+ habitTitle);
                         String denoteDate = (String) doc.getData().get("Denote Date");
-                        // Log.d(TAG, "denoate date is " + denoteDate);
+                        // Log.d(TAG, "denote date is " + denoteDate);
                         HabitEvent habitEvent = new HabitEvent(habitTitle, denoteDate);
                         String comment = (String) doc.getData().get("Comment");
                         habitEvent.setComment(comment);
