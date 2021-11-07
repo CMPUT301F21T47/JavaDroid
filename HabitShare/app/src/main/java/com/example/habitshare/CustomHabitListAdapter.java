@@ -45,12 +45,12 @@ public class CustomHabitListAdapter extends ArrayAdapter<Habit> {
         // we want to display the value in the format we want
         habitName.setText(habit.getTitle());
         habitDate.setText("Date: " + habit.getDate());
-        habitFrequency.setText(habit.getSelectDayOfWeek());
+        habitFrequency.setText("Frequency: " + habit.getSelectDayOfWeek());
         if(habit.getStatus()){
-            habitStatus.setText("Done");
+            habitStatus.setText("Status: Done");
         }
         else{
-            habitStatus.setText("Not done");
+            habitStatus.setText("Status: Not Done");
         }
 
         return view;

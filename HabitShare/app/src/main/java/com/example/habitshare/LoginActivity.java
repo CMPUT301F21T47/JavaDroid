@@ -19,6 +19,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
+
 public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     TextView signup;
@@ -40,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         enterEmail = findViewById(R.id.login_enter_email);
         enterPassword = findViewById(R.id.login_enter_password);
         loadAnimation = new LoadingDialog(LoginActivity.this);
-
 
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("UserData");

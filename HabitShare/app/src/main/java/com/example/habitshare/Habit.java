@@ -8,6 +8,7 @@ public class Habit {
     private String date;
     private String title;
     private String reason;
+    private String lastTimeDenoted;
     private boolean isDisclosed;
     private boolean[] daysOfWeekList = new boolean[7];
     private boolean status;
@@ -26,6 +27,7 @@ public class Habit {
         this.date = date;
         this.isDisclosed = false;
         this.status = false;
+        this.lastTimeDenoted = "";
     }
 
     /**
@@ -39,6 +41,7 @@ public class Habit {
         this.title = title;
         this.date = date;
         this.reason = reason;
+        this.lastTimeDenoted = "";
         String dayString = "";
         int j;
         for(int i = 0; i < 7; i++){
@@ -51,37 +54,37 @@ public class Habit {
                     dayString += daysOfWeek.charAt(i);
                 }
                 if(dayString.equals("Monday")){
-                    j = 0;
-                    daysOfWeekList[j] = true;
-                    dayString = "";
-                }
-                if(dayString.equals("Tuesday")){
                     j = 1;
                     daysOfWeekList[j] = true;
                     dayString = "";
                 }
-                if(dayString.equals("Wednesday")){
+                if(dayString.equals("Tuesday")){
                     j = 2;
                     daysOfWeekList[j] = true;
                     dayString = "";
                 }
-                if(dayString.equals("Thursday")){
+                if(dayString.equals("Wednesday")){
                     j = 3;
                     daysOfWeekList[j] = true;
                     dayString = "";
                 }
-                if(dayString.equals("Friday")){
+                if(dayString.equals("Thursday")){
                     j = 4;
                     daysOfWeekList[j] = true;
                     dayString = "";
                 }
-                if(dayString.equals("Saturday")){
+                if(dayString.equals("Friday")){
                     j = 5;
                     daysOfWeekList[j] = true;
                     dayString = "";
                 }
-                if(dayString.equals("Sunday")){
+                if(dayString.equals("Saturday")){
                     j = 6;
+                    daysOfWeekList[j] = true;
+                    dayString = "";
+                }
+                if(dayString.equals("Sunday")){
+                    j = 0;
                     daysOfWeekList[j] = true;
                     dayString = "";
                 }
@@ -204,28 +207,27 @@ public class Habit {
         for(int i = 0; i < daysOfWeekList.length; i++) {
             if (daysOfWeekList[i]) {
                 switch (i) {
-                    case 0:
+                    case 1:
                         dayString = "Monday";
                         break;
-                    case 1:
+                    case 2:
                         dayString = "Tuesday";
                         break;
-                    case 2:
+                    case 3:
                         dayString = "Wednesday";
                         break;
-                    case 3:
+                    case 4:
                         dayString = "Thursday";
                         break;
-                    case 4:
+                    case 5:
                         dayString = "Friday";
                         break;
-                    case 5:
+                    case 6:
                         dayString = "Saturday";
                         break;
-                    case 6:
+                    case 0:
                         dayString = "Sunday";
                 }
-
                 if(!days.equals("")){
                     days += ", ";
                 }
@@ -250,5 +252,21 @@ public class Habit {
      */
     public void changeStatus(){
         this.status = !status;
+    }
+
+    /**
+     * lastTimeDenoted getter
+     * @return a string that represents the last time this habit was denoted
+     */
+    public String getLastTimeDenoted() {
+        return lastTimeDenoted;
+    }
+
+    /**
+     * lastTimeDenoted setter
+     * @param lastTimeDenoted a string that represents the last time this habit was denoted
+     */
+    public void setLastTimeDenoted(String lastTimeDenoted) {
+        this.lastTimeDenoted = lastTimeDenoted;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.habitshare;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.example.habitshare.R;
 public class MainActivity extends AppCompatActivity {
 
     public static String email; // This is the unique key to access user's data
+    public static Uri imageURI;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     String userName;

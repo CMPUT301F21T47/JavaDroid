@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
     implementation "io.grpc:grpc-okhttp:1.41.0"
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
