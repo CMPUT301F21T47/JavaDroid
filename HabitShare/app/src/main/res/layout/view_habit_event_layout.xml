@@ -35,15 +35,17 @@
         android:textSize="20sp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp" />
+
     <TextView
         android:id="@+id/view_habit_event_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp" />
+        android:fontFamily="@font/roboto"
+        android:text="None"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,12 +66,32 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photograph:"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp" />
+
+
+    <ImageView
+        android:id="@+id/view_habit_event_image"
+        android:layout_width="307dp"
+        android:layout_height="278dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_menu_gallery" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginLeft="20dp">
 
         <Button
             android:id="@+id/edit_habit_event"
@@ -84,28 +106,27 @@
             android:id="@+id/delete_habit_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="49dp"
             android:text="Delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cancel_habit_event"
-            app:layout_constraintHorizontal_bias="0.02"
             app:layout_constraintStart_toEndOf="@+id/edit_habit_event"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/cancel_habit_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="72dp"
             android:text="cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 
 </LinearLayout>

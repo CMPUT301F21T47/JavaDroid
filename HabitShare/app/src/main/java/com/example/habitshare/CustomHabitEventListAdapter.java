@@ -21,6 +21,7 @@ public class CustomHabitEventListAdapter<H> extends ArrayAdapter {
         this.habitEvents = habitEvents;
         this.context = context;
     }
+    
 
     @NonNull
     @Override

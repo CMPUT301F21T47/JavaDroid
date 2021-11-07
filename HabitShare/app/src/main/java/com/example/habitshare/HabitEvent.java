@@ -4,10 +4,12 @@ public class HabitEvent extends Habit{
 
     private String comment;
     private String denoteDate;
+    private String imageFileName;
 
     HabitEvent(String title, String denoteDate) {
         super(title, "----/--/--");
         this.denoteDate = denoteDate;
+        this.imageFileName = "";
     }
 
     /**
@@ -40,6 +42,14 @@ public class HabitEvent extends Habit{
      */
     public void setDenoteDate(String denoteDate) {
         this.denoteDate = denoteDate;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageLocation) {
+        this.imageFileName = imageLocation;
     }
 }
 

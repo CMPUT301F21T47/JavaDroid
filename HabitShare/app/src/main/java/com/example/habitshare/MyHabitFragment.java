@@ -2,10 +2,13 @@ package com.example.habitshare;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -20,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,11 +32,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -40,20 +47,18 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 import com.example.habitshare.R;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 public class MyHabitFragment extends Fragment{
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "email";
-
-
     // Global Variables
     View view;
     FloatingActionButton addHabitButton;
@@ -74,7 +79,11 @@ public class MyHabitFragment extends Fragment{
     FirebaseFirestore db;
     private final String TAG = "MyHabits";
     boolean isViewTodayOnly = false;
-
+    boolean checkConfirmCondition;
+    boolean checkSelectImage;
+    Uri imageURI;
+    LoadingDialog loadAnimation;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     // dialog views
     TextView dateView;
@@ -98,35 +107,7 @@ public class MyHabitFragment extends Fragment{
     TextView viewDate;
     TextView viewDaysOfWeek;
     TextView viewReason;
-
-
-
-
-//    public MyHabitFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param email Parameter 1.
-//     * @return A new instance of fragment MyHabitsFragment.
-//     */
-//    public static MyHabitFragment newInstance(String email) {
-//        MyHabitFragment fragment = new MyHabitFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, email);
-//
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//    }
+    ImageView habitEventImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -148,7 +129,7 @@ public class MyHabitFragment extends Fragment{
         db = FirebaseFirestore.getInstance();
         setCollectionReferenceAddSnapshotListener();
 
-        Log.d(TAG, "email is"+ MainActivity.email);
+        //Log.d(TAG, "email is"+ MainActivity.email);
 
         // switch between all habits and today's habits
         switchTodayAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -216,65 +197,83 @@ public class MyHabitFragment extends Fragment{
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean checkConfirmCondition = true;
-                habitTitle = enterHabitTitle.getText().toString();
-                reason = enterReason.getText().toString();
-                Habit habit = new Habit(habitTitle, date);
-                setSelectedDays(habit);
-                daysOfWeek = habit.getSelectDayOfWeek();
+               checkConfirmCondition = true;
+               habitTitle = enterHabitTitle.getText().toString();
+               reason = enterReason.getText().toString();
+               Habit habit = new Habit(habitTitle, date);
+               setSelectedDays(habit);
+               daysOfWeek = habit.getSelectDayOfWeek();
 
-                // Check constraints of user input
-                if(habitTitle.equals("")){
-                    enterHabitTitle.setError("Habit Title cannot be empty");
-                    checkConfirmCondition = false;
-                }
-                if(date.equals("----/--/--")){
-                    Toast.makeText(getContext(), "Must select date", LENGTH_SHORT).show();
-                    checkConfirmCondition = false;
-                }
-                if(daysOfWeek.equals("")){
-                    Toast.makeText(getContext(), "Must select a day", LENGTH_SHORT).show();
-                    checkConfirmCondition = false;
-                }
+               // Check constraints of user input
+               collectionReference.document(habitTitle).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                   @Override
+                   public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                       DocumentSnapshot habitDocument = task.getResult();
+                       if (task.isSuccessful()) {
+                           assert habitDocument != null;
+                           // check the existence of the habit
+                           if (habitDocument.exists()) {
+                               enterHabitTitle.setError("This habit has already existed, please enter another one");
+                           }
+                           else {
+                               // check other constraints
+                               if (habitTitle.equals("")) {
+                                   enterHabitTitle.setError("Habit Title cannot be empty");
+                                   checkConfirmCondition = false;
+                               }
+                               if (date.equals("----/--/--")) {
+                                   Toast.makeText(getContext(), "Must select date", LENGTH_SHORT).show();
+                                   checkConfirmCondition = false;
+                               }
+                               if (daysOfWeek.equals("")) {
+                                   Toast.makeText(getContext(), "Must select a day", LENGTH_SHORT).show();
+                                   checkConfirmCondition = false;
+                               }
 
-                if(reason.equals("")){
-                    enterReason.setError("Reason cannot be empty");
-                    checkConfirmCondition = false;
-                }
+                               if (reason.equals("")) {
+                                   enterReason.setError("Reason cannot be empty");
+                                   checkConfirmCondition = false;
+                               }
 
-                if(habitTitle.length() > 20){
-                    enterHabitTitle.setError("Cannot longer than 20 characters");
-                    checkConfirmCondition =false;
-                }
-                if(reason.length() > 30){
-                    enterReason.setError("Cannot longer than 30 characters");
-                }
-                if(checkConfirmCondition){
-                    HashMap<String, String> data = new HashMap<>();
-                    data.put("Date of Start", date);
-                    data.put("Days of Week", daysOfWeek);
-                    data.put("Reason", reason);
-                    data.put("Status", "Not Done");
-                    collectionReference
-                            .document(habitTitle)
-                            .set(data)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG, "Data has been added successfully!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "Data could not be added!" + e.toString());
-                                }
-                            });
-                    dialog.dismiss(); // close dialog only if all inputs are valid
-                }
+                               if (habitTitle.length() > 20) {
+                                   enterHabitTitle.setError("Cannot longer than 20 characters");
+                                   checkConfirmCondition = false;
+                               }
+                               if (reason.length() > 30) {
+                                   enterReason.setError("Cannot longer than 30 characters");
+                               }
 
+                               if (checkConfirmCondition) {
+                                   HashMap<String, String> data = new HashMap<>();
+                                   data.put("Date of Start", date);
+                                   data.put("Days of Week", daysOfWeek);
+                                   data.put("Reason", reason);
+                                   data.put("Status", "Not Done");
+                                   data.put("Last Time Denoted", "");
+                                   collectionReference
+                                           .document(habitTitle)
+                                           .set(data)
+                                           .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                               @Override
+                                               public void onSuccess(Void unused) {
+                                                   Log.d(TAG, "Data has been added successfully!");
+                                               }
+                                           })
+                                           .addOnFailureListener(new OnFailureListener() {
+                                               @Override
+                                               public void onFailure(@NonNull Exception e) {
+                                                   Log.d(TAG, "Data could not be added!" + e.toString());
+                                               }
+                                           });
+                                   dialog.dismiss(); // close dialog only if all inputs are valid
+                               }
+                           }
+                       }
+                   }
+               });
             }
         });
+
 
         cancelAddHabit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -369,6 +368,7 @@ public class MyHabitFragment extends Fragment{
         EditText enterComment = dialog.findViewById(R.id.denote_habit_comment);
         Button confirmDenote = dialog.findViewById(R.id.denote_habit_confirm_button);
         Button cancelDenote = dialog.findViewById(R.id.denote_habit_cancel_button);
+        habitEventImage = dialog.findViewById(R.id.habit_event_image);
 
         final CollectionReference collectionReference1 = db.collection("UserData")
                 .document(MainActivity.email)
@@ -377,19 +377,28 @@ public class MyHabitFragment extends Fragment{
                 .document(MainActivity.email)
                 .collection("Habits");
 
+        checkSelectImage = false;
         habit = habitDataList.get(i);
 
         // get current date to keep a record on the denote date
         Calendar cal = Calendar.getInstance();
-        currentDate = DateFormat.getDateInstance().format(cal.getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        currentDate = dateFormat.format(cal.getTime());
 
+        habit.setLastTimeDenoted(currentDate);
         denoteHabitName.setText(habit.getTitle());
+
+        habitEventImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
 
         confirmDenote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String comment = enterComment.getText().toString();
-
                 // Check user input constraint
                 if(comment.length() > 20){
                     enterComment.setError("A comment cannot have more than 20 characters");
@@ -399,11 +408,35 @@ public class MyHabitFragment extends Fragment{
                     final String date = habit.getDate();
                     final String daysOfWeek = habit.getSelectDayOfWeek();
                     final String reason = habit.getReason();
+                    final String lastTimeDenoted = habit.getLastTimeDenoted();
 
                     // add a new habit event
                     HashMap<String, String> data = new HashMap<>();
                     data.put("Comment", comment);
                     data.put("Denote Date", currentDate);
+                    if(checkSelectImage){
+                        String fileName = habitTitle + "_" + currentDate;
+                        data.put("Image File Name", fileName);
+                        StorageReference imageRef = storageReference.child("images/" + fileName);
+                        loadAnimation = new LoadingDialog(getContext());
+                        loadAnimation.startLoadingDialog();
+                        imageRef.putFile(imageURI)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        loadAnimation.dismissLoadingDialog();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        loadAnimation.dismissLoadingDialog();
+                                    }
+                                });
+                    }
+                    else{
+                        data.put("Image File Name", "");
+                    }
                     collectionReference1
                             .document(habitTitle)
                             .set(data)
@@ -426,6 +459,7 @@ public class MyHabitFragment extends Fragment{
                     data.put("Days of Week", daysOfWeek);
                     data.put("Reason", reason);
                     data.put("Status", "Done");
+                    data.put("Last Time Denoted", lastTimeDenoted);
                     collectionReference2.document(habitTitle)
                             .set(data)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -497,25 +531,25 @@ public class MyHabitFragment extends Fragment{
         for(int j = 0; j < daysOfWeekList.length; j++){
             if (daysOfWeekList[j]) {
                 switch (j) {
-                    case 0:
+                    case 1:
                         monCheckBox.setChecked(true);
                         break;
-                    case 1:
+                    case 2:
                         tueCheckBox.setChecked(true);
                         break;
-                    case 2:
+                    case 3:
                         wedCheckBox.setChecked(true);
                         break;
-                    case 3:
+                    case 4:
                         thuCheckBox.setChecked(true);
                         break;
-                    case 4:
+                    case 5:
                         friCheckBox.setChecked(true);
                         break;
-                    case 5:
+                    case 6:
                         satCheckBox.setChecked(true);
                         break;
-                    case 6:
+                    case 0:
                         sunCheckBox.setChecked(true);
                 }
             }
@@ -612,7 +646,7 @@ public class MyHabitFragment extends Fragment{
      * Change the data list when a change occurred in the cloud
      */
     private void setCollectionReferenceAddSnapshotListener(){
-        Log.d(TAG, "email is" + MainActivity.email);
+        //Log.d(TAG, "email is" + MainActivity.email);
         final CollectionReference collectionReference = db.collection("UserData")
                 .document(MainActivity.email)
                 .collection("Habits");
@@ -628,12 +662,13 @@ public class MyHabitFragment extends Fragment{
                     habitDataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         if (doc != null){
-                            Log.d(TAG, String.valueOf(doc.getData().get("Habits")));
+                            //Log.d(TAG, String.valueOf(doc.getData().get("Habits")));
                             String habitTitle = doc.getId();
                             String date = (String) doc.getData().get("Date of Start");
                             String daysOfWeek = (String) doc.getData().get("Days of Week");
                             String reason = (String) doc.getData().get("Reason");
                             String habitStatus = (String) doc.getData().get("Status");
+                            String lastTimeDenoted = (String) doc.getData().get("Last Time Denoted");
                             boolean status;
 //                            Log.d(TAG, "title is " + habitTitle);
 //                            Log.d(TAG, "date is "  + date);
@@ -644,6 +679,7 @@ public class MyHabitFragment extends Fragment{
                                 status = !habitStatus.equals("Not Done");
                                 Habit habit = new Habit(habitTitle, date, reason, daysOfWeek);
                                 habit.setStatus(status);
+                                habit.setLastTimeDenoted(lastTimeDenoted);
                                 habitDataList.add(habit); // Adding the cities and provinces from FireStore
                             }
 
@@ -710,7 +746,6 @@ public class MyHabitFragment extends Fragment{
                     day_str = "" + day;
                 }
                 date = year +"-" + month_str + "-" + day_str;
-                // date = year + "-" + month + "-" + day;
                 dateView.setText(date);
 
             }
@@ -723,25 +758,25 @@ public class MyHabitFragment extends Fragment{
      */
     private void setSelectedDays(Habit habit){
         if(monCheckBox.isChecked()){
-            habit.selectDayOfWeek(0);
-        }
-        if(tueCheckBox.isChecked()){
             habit.selectDayOfWeek(1);
         }
-        if(wedCheckBox.isChecked()){
+        if(tueCheckBox.isChecked()){
             habit.selectDayOfWeek(2);
         }
-        if(thuCheckBox.isChecked()){
+        if(wedCheckBox.isChecked()){
             habit.selectDayOfWeek(3);
         }
-        if(friCheckBox.isChecked()){
+        if(thuCheckBox.isChecked()){
             habit.selectDayOfWeek(4);
         }
-        if(satCheckBox.isChecked()){
+        if(friCheckBox.isChecked()){
             habit.selectDayOfWeek(5);
         }
-        if(sunCheckBox.isChecked()){
+        if(satCheckBox.isChecked()){
             habit.selectDayOfWeek(6);
+        }
+        if(sunCheckBox.isChecked()){
+            habit.selectDayOfWeek(0);
         }
     }
 
@@ -753,13 +788,33 @@ public class MyHabitFragment extends Fragment{
         todayHabitDataList.clear();
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_WEEK);
-        Log.d(TAG, "today is " + day);
+        //Log.d(TAG, "today is " + day);
         for(int i = 0; i < habitDataList.size(); i++){
             Habit habit = habitDataList.get(i);
-            if(habit.getSelectDayOfWeekList()[day-2] && !habit.getStatus()){
+            if(habit.getSelectDayOfWeekList()[day-1] && !habit.getStatus()){
                 todayHabitDataList.add(habit);
             }
         }
     }
 
+    private void selectImage(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == 2 && data != null){
+                Log.d(TAG, "Reached here");
+                imageURI = data.getData();
+                Log.d(TAG, "Image URI " + (imageURI != null));
+                habitEventImage.setImageURI(imageURI);
+                checkSelectImage = true;
+            }
+        }
+    }
 }
