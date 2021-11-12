@@ -30,10 +30,12 @@ public class ViewHabitEventActivity extends AppCompatActivity {
     TextView viewHabitEventTitle;
     TextView viewHabitEventComment;
     TextView viewHabitEventDate;
+    TextView viewHabitEventLocation;
     Button buttonViewHabitEventEdit;
     Button buttonViewHabitEventDelete;
     Button buttonViewHabitEventCancel;
     ImageView viewHabitEventImage;
+    String location;
     String habitTitle;
     String eventTitle;
     String comment;
@@ -52,6 +54,9 @@ public class ViewHabitEventActivity extends AppCompatActivity {
         buttonViewHabitEventDelete = findViewById(R.id.delete_habit_event);
         buttonViewHabitEventCancel = findViewById(R.id.cancel_habit_event);
         viewHabitEventImage = findViewById(R.id.view_habit_event_image);
+        viewHabitEventLocation = findViewById(R.id.view_habit_event_location);
+
+        Log.d(TAG, "viewHabitEventLocation" + (viewHabitEventLocation == null));
 
         // get data from intent
         Intent intent = getIntent();
@@ -59,6 +64,8 @@ public class ViewHabitEventActivity extends AppCompatActivity {
         comment = intent.getStringExtra("comment");
         denoteDate = intent.getStringExtra("denote_date");
         eventTitle = intent.getStringExtra("event_title");
+        location = intent.getStringExtra("location");
+
 
 
         Log.d(TAG, "image file name is " + eventTitle);
@@ -92,6 +99,12 @@ public class ViewHabitEventActivity extends AppCompatActivity {
         }
         else{
             viewHabitEventComment.setText(comment);
+        }
+
+        viewHabitEventLocation.setText(location);
+
+        if(location.equals("N/A")){
+            viewHabitEventLocation.setTextColor(Color.GRAY);
         }
         viewHabitEventDate.setText(denoteDate);
 

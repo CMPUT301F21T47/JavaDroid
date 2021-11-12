@@ -144,14 +144,13 @@ public class AddHabitActivity extends AppCompatActivity {
                 Log.d(TAG, "Reached here");
                 // check other constraints
                 if (date.equals("yyyy-mm-dd")) {
-                    Snackbar setDateSnackBar = Snackbar.make(findViewById(R.id.add_habit), "Please select a date", Snackbar.LENGTH_INDEFINITE)
+                    Snackbar.make(findViewById(R.id.add_habit), "Please select a date", Snackbar.LENGTH_INDEFINITE)
                             .setAction("Set a Date", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     selectDate.performClick();
                                 }
-                            });
-                    setDateSnackBar.show();
+                            }).show();
                     checkConfirmCondition = false;
                 }
                 if (daysOfWeek.equals("")) {

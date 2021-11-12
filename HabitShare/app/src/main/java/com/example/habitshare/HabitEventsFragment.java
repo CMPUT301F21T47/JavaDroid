@@ -85,38 +85,40 @@ public class HabitEventsFragment extends Fragment {
                 intent.putExtra("comment", habitEvent.getComment());
                 intent.putExtra("denote_date", habitEvent.getDenoteDate());
                 intent.putExtra("event_title", habitEvent.getEvenTitle());
-                if(!habitEvent.getEvenTitle().equals("")){
-                    try{
-                        loadAnimation = new LoadingDialog(getContext());
-                        loadAnimation.startLoadingDialog();
-                        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                        imageFile = File.createTempFile(habitEvent.getEvenTitle(), "", storageDir);
-                        storageReference.child("images/" + habitEvent.getEvenTitle()).getFile(imageFile)
-                                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                                        imageURI = FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", imageFile);
-                                        intent.putExtra("image_uri", imageURI.toString());
-                                        loadAnimation.dismissLoadingDialog();
-                                        startActivity(intent);
+                intent.putExtra("location", habitEvent.getLocation());
+                Log.d(TAG, habitEvent.getLocation());
 
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        loadAnimation.dismissLoadingDialog();
-                                    }
-                                });
+                    try{
+                        if(habitEvent.isHasImage()) {
+                            loadAnimation = new LoadingDialog(getContext());
+                            loadAnimation.startLoadingDialog();
+                            File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                            imageFile = File.createTempFile(habitEvent.getEvenTitle(), "", storageDir);
+                            storageReference.child("images/" + habitEvent.getEvenTitle()).getFile(imageFile)
+                                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                            bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                                            imageURI = FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", imageFile);
+                                            intent.putExtra("image_uri", imageURI.toString());
+                                            loadAnimation.dismissLoadingDialog();
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            loadAnimation.dismissLoadingDialog();
+                                        }
+                                    });
+                        }
+                        else{
+                            startActivity(intent);
+                        }
                     } catch (IOException e){
                         e.printStackTrace();
                     }
                 }
-                else{
-                    startActivity(intent);
-                }
-            }
         });
 
         return view;
@@ -400,9 +402,13 @@ public class HabitEventsFragment extends Fragment {
                         String denoteDate = (String) doc.getData().get("Denote Date");
                         HabitEvent habitEvent = new HabitEvent(habitTitle, denoteDate);
                         String comment = (String) doc.getData().get("Comment");
+                        String location = (String) doc.getData().get("Location");
+                        Boolean isHasImage = (Boolean) doc.getData().get("Has Image");
+                        habitEvent.setLocation(location);
                         habitEvent.setComment(comment);
                         habitEvent.setEvenTitle(eventTitle);
                         habitEvent.setTitle(habitTitle);
+                        habitEvent.setHasImage(isHasImage);
                         habitEventDataList.add(habitEvent); // Adding the cities and provinces from FireStore
                     }
                     habitEventArrayAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud

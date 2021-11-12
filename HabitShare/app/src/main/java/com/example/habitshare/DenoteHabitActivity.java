@@ -40,7 +40,9 @@ public class DenoteHabitActivity extends AppCompatActivity {
     private final static String TAG = "DenoteHabitActivity";
     private final static int REQUEST_GALLERY = 2;
     private final static int REQUEST_CAMERA = 3;
+    private final static int REQUEST_MAP = 999;
     HashMap<String, Object> data = new HashMap<>();
+    TextView tvLocation;
     TextView denoteHabitName;
     EditText enterComment;
     Button confirmDenote;
@@ -54,6 +56,7 @@ public class DenoteHabitActivity extends AppCompatActivity {
     String comment;
     String currentPhotoPath;
     String denoteDate;
+    String addressLine = "N/A";
     Uri imageURI;
     LoadingDialog loadAnimation;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -73,6 +76,7 @@ public class DenoteHabitActivity extends AppCompatActivity {
         cancelDenote = findViewById(R.id.denote_habit_cancel_button);
         pickLocation = findViewById(R.id.button_pick_location);
         habitEventImage = findViewById(R.id.habit_event_image);
+        tvLocation = findViewById(R.id.tv_location);
 
         hasImage = false;
         db = FirebaseFirestore.getInstance();
@@ -119,12 +123,12 @@ public class DenoteHabitActivity extends AppCompatActivity {
         pickLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(DenoteHabitActivity.this, MapActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(DenoteHabitActivity.this, MapActivity.class);
+                startActivityForResult(intent, REQUEST_MAP);
             }
         });
 
-        
+
 
         habitEventImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,10 +148,11 @@ public class DenoteHabitActivity extends AppCompatActivity {
                     data.put("Habit Title", habitTitle);
                     data.put("Comment", comment);
                     data.put("Denote Date", denoteDate);
+                    data.put("Location", addressLine);
                     if(checkSelectImage){
                         if(imageURI != null){
                             // upload image if URI is not null
-                            data.put("Has Image", "True");
+                            data.put("Has Image", true);
                             StorageReference imageRef = storageReference.child("images/" + eventTitle);
                             loadAnimation = new LoadingDialog(DenoteHabitActivity.this);
                             loadAnimation.startLoadingDialog();
@@ -207,10 +212,10 @@ public class DenoteHabitActivity extends AppCompatActivity {
                     else{
                         Log.d(TAG, "hasImage"  + hasImage);
                         if(requestCode == 1 && hasImage){
-                            data.put("Has Image", "True");
+                            data.put("Has Image", true);
                         }
                         else{
-                            data.put("Has Image", "False");
+                            data.put("Has Image", false);
                         }
 
                         habitEventsReference
@@ -333,6 +338,7 @@ public class DenoteHabitActivity extends AppCompatActivity {
                 imageURI = FileProvider.getUriForFile(DenoteHabitActivity.this,
                         "com.example.android.fileprovider",
                         photoFile);
+                Log.d(TAG, "image uri is " + imageURI);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageURI);
                 startActivityForResult(takePictureIntent, REQUEST_CAMERA);
             }
@@ -343,16 +349,21 @@ public class DenoteHabitActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK){
-            if(requestCode == REQUEST_GALLERY && data != null){
+            if(requestCode == REQUEST_GALLERY){
                 imageURI = data.getData();
                 habitEventImage.setImageURI(imageURI);
                 checkSelectImage = true;
             }
-            if(requestCode == REQUEST_CAMERA && data != null){
-                if(imageURI != null){
-                    habitEventImage.setImageURI(imageURI);
-                    checkSelectImage = true;
-                }
+            if(requestCode == REQUEST_CAMERA){
+                Log.d(TAG, "Reached here");
+                habitEventImage.setImageURI(imageURI);
+                checkSelectImage = true;
+
+            }
+            if(requestCode == REQUEST_MAP){
+                addressLine = data.getStringExtra("address_line");
+                Log.d(TAG, addressLine);
+                tvLocation.setText(addressLine);
             }
         }
     }

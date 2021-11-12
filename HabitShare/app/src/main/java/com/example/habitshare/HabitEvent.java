@@ -5,6 +5,7 @@ public class HabitEvent extends Habit{
     private String evenTitle;
     private String comment;
     private String denoteDate;
+    private String location;
     private boolean hasImage;
 
     HabitEvent(String title, String denoteDate) {
@@ -60,6 +61,14 @@ public class HabitEvent extends Habit{
 
     public void setHasImage(boolean hasImage) {
         this.hasImage = hasImage;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
 

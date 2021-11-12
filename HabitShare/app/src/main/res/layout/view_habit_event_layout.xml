@@ -9,8 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="20dp">
+        android:paddingStart="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,8 +53,8 @@
                 android:id="@+id/view_habit_event_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="title"
                 android:fontFamily="@font/roboto"
+                android:text="title"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -91,9 +90,9 @@
                 android:id="@+id/view_habit_event_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="date"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto"
+                android:text="date"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -105,6 +104,26 @@
                 android:text="Photograph:"
                 android:textColor="@color/black"
                 android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
+                android:text="Location: "
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/view_habit_event_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
+                android:text="N/A"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
 
 
             <ImageView
