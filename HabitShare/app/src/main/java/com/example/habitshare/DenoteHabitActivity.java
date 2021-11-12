@@ -124,6 +124,8 @@ public class DenoteHabitActivity extends AppCompatActivity {
             }
         });
 
+        
+
         habitEventImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
