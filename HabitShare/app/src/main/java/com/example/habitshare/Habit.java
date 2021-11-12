@@ -4,7 +4,7 @@ package com.example.habitshare;
 /**
  * A class that represents the user's habit
  */
-public class Habit {
+public class Habit{
     private String date;
     private String title;
     private String reason;
@@ -244,14 +244,6 @@ public class Habit {
      */
     public boolean[] getSelectDayOfWeekList(){
         return daysOfWeekList;
-    }
-
-
-    /**
-     * flip the status
-     */
-    public void changeStatus(){
-        this.status = !status;
     }
 
     /**

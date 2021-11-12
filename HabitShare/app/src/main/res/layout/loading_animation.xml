@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="85dp"
+        android:layout_width="93dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:text="Loading..."
@@ -28,4 +28,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

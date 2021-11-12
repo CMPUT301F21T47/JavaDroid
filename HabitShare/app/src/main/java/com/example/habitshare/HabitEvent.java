@@ -2,14 +2,16 @@ package com.example.habitshare;
 
 public class HabitEvent extends Habit{
 
+    private String evenTitle;
     private String comment;
     private String denoteDate;
-    private String imageFileName;
+    private boolean hasImage;
 
     HabitEvent(String title, String denoteDate) {
         super(title, "----/--/--");
         this.denoteDate = denoteDate;
-        this.imageFileName = "";
+        this.evenTitle = "";
+        this.hasImage = false;
     }
 
     /**
@@ -44,12 +46,20 @@ public class HabitEvent extends Habit{
         this.denoteDate = denoteDate;
     }
 
-    public String getImageFileName() {
-        return imageFileName;
+    public String getEvenTitle() {
+        return evenTitle;
     }
 
-    public void setImageFileName(String imageLocation) {
-        this.imageFileName = imageLocation;
+    public void setEvenTitle(String imageLocation) {
+        this.evenTitle = imageLocation;
+    }
+
+    public boolean isHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
     }
 }
 

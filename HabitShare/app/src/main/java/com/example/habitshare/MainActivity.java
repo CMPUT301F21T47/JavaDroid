@@ -4,36 +4,32 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.habitshare.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import com.example.habitshare.R;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static String email; // This is the unique key to access user's data
     public static Uri imageURI;
+    private static final int REQUEST_LOGIN = 1;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     String userName;
@@ -73,14 +69,15 @@ public class MainActivity extends AppCompatActivity {
      */
     private void startLogin(){
         Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, REQUEST_LOGIN);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && data != null) {
+        if (requestCode == REQUEST_LOGIN && data != null) {
             if (resultCode == RESULT_OK) {
+                firstTimeLogin = false;
                 loadAnimation.startLoadingDialog();
                 Log.d(TAG, "Return succeed");
                 email = data.getStringExtra("email_from_login");

@@ -2,15 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="400dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,15 +19,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/comfortaa"
                     android:text="Habit Title: "
                     android:textColor="@color/black"
                     android:textSize="30sp"
@@ -40,7 +37,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:layout_marginEnd="36dp"
                     android:text="Delete"
                     app:backgroundTint="#FF0000"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -54,8 +50,9 @@
                 android:id="@+id/view_habit_event_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="title"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/roboto"
+                android:text="title"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -63,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/comfortaa"
                 android:text="Comment: "
                 android:textColor="@color/black"
                 android:textSize="30sp" />
@@ -82,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/comfortaa"
                 android:text="Denote Date: "
                 android:textColor="@color/black"
                 android:textSize="30sp" />
@@ -91,9 +88,9 @@
                 android:id="@+id/view_habit_event_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="date"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto"
+                android:text="date"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -101,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/comfortaa"
                 android:text="Photograph:"
                 android:textColor="@color/black"
                 android:textSize="30sp" />
@@ -109,8 +106,8 @@
 
             <ImageView
                 android:id="@+id/view_habit_event_image"
-                android:layout_width="339dp"
-                android:layout_height="305dp"
+                android:layout_width="match_parent"
+                android:layout_height="306dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +117,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
 
                 <Button
@@ -137,8 +136,8 @@
                     android:id="@+id/cancel_habit_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="28dp"
                     android:text="cancel"
+                    app:backgroundTint="@android:color/darker_gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
