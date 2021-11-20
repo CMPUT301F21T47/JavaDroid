@@ -3,6 +3,7 @@ package com.example.habitshare;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -93,7 +94,7 @@ public class DenoteHabitActivity extends AppCompatActivity {
         requestCode = intent.getIntExtra("request_code", 0);
         habitTitle = intent.getStringExtra("habit_title");
         eventTitle = intent.getStringExtra("event_title");
-
+        addressLine = intent.getStringExtra("location");
 
         // preparation for editing a habit event
         if(requestCode == 1){
@@ -101,6 +102,10 @@ public class DenoteHabitActivity extends AppCompatActivity {
                 imageURI = Uri.parse(intent.getStringExtra("image_uri"));
                 habitEventImage.setImageURI(imageURI);
                 hasImage = true;
+                tvLocation.setText(addressLine);
+                if(addressLine.equals("N/A")){
+                    tvLocation.setTextColor(Color.GRAY);
+                }
             }
             comment = intent.getStringExtra("comment");
             enterComment.setText(comment);
@@ -148,7 +153,12 @@ public class DenoteHabitActivity extends AppCompatActivity {
                     data.put("Habit Title", habitTitle);
                     data.put("Comment", comment);
                     data.put("Denote Date", denoteDate);
-                    data.put("Location", addressLine);
+                    if(addressLine == null){
+                        data.put("Location", "N/A");
+                    }
+                    else {
+                        data.put("Location", addressLine);
+                    }
                     if(checkSelectImage){
                         if(imageURI != null){
                             // upload image if URI is not null
@@ -364,6 +374,7 @@ public class DenoteHabitActivity extends AppCompatActivity {
                 addressLine = data.getStringExtra("address_line");
                 Log.d(TAG, addressLine);
                 tvLocation.setText(addressLine);
+                tvLocation.setTextColor(Color.BLACK);
             }
         }
     }

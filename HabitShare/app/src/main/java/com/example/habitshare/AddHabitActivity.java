@@ -230,26 +230,44 @@ public class AddHabitActivity extends AppCompatActivity {
                             data.put("Last Time Denoted", lastTimeDenoted);
                             data.put("Position", position);
                             if(!habitTitle.equals(previousTitle)){
-                                collectionReference
-                                        .document(previousTitle)
-                                        .delete();
+                                collectionReference.document(habitTitle).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        lastTimeDenoted = documentSnapshot.getString("Last Time Denoted");
+                                        data.put("Last Time Denoted", lastTimeDenoted);
+                                        collectionReference
+                                                .document(previousTitle)
+                                                .delete();
+                                        collectionReference
+                                                .document(habitTitle)
+                                                .set(data)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        finish();
+                                                    }
+                                                });
+                                    }
+                                });
                             }
-                            collectionReference
-                                    .document(habitTitle)
-                                    .set(data)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Log.d(TAG, "Data has been added successfully!");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d(TAG, "Data could not be added!" + e.toString());
-                                        }
-                                    });
-                            finish();
+                            else {
+                                collectionReference
+                                        .document(habitTitle)
+                                        .set(data)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Log.d(TAG, "Data has been added successfully!");
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "Data could not be added!" + e.toString());
+                                            }
+                                        });
+                            }
                         }
 
                     }

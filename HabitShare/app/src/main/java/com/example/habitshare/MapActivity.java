@@ -84,15 +84,12 @@ public class MapActivity extends AppCompatActivity {
         confirm = findViewById(R.id.button_confirm_location);
         confirm.setVisibility(View.INVISIBLE);
 
+
         if (ActivityCompat.checkSelfPermission(this, FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{FINE_LOCATION, COARSE_LOCATION},
                     REQUEST_LOCATION_PERMISSION);
         } else {
-            showMap();
-            Places.initialize(MapActivity.this, getString(R.string.API_KEY));
-            placesClient = Places.createClient(this);
-            getCurrentLocation();
             init();
         }
 
@@ -114,21 +111,24 @@ public class MapActivity extends AppCompatActivity {
                 confirm.setVisibility(View.VISIBLE);
             }
         })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Snackbar failGetCurrentLocation = Snackbar.make(findViewById(R.id.activity_map), "Failed to get current location", Snackbar.LENGTH_INDEFINITE)
-                                .setAction("Try Again", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        getCurrentLocation();
-                                    }
-                                });
-                        failGetCurrentLocation.show();
-                    }
-                });
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Snackbar failGetCurrentLocation = Snackbar.make(findViewById(R.id.activity_map), "Failed to get current location", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Try Again", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                getCurrentLocation();
+                            }
+                        });
+                failGetCurrentLocation.show();
+            }
+        });
     }
     public void init() {
+        Places.initialize(MapActivity.this, getString(R.string.API_KEY));
+        placesClient = Places.createClient(this);
+        showMap();
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
@@ -181,13 +181,13 @@ public class MapActivity extends AppCompatActivity {
     }
 
 
-
     public void showMap(){
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 GMap = googleMap;
+                getCurrentLocation();
             }
         });
     }
@@ -230,6 +230,7 @@ public class MapActivity extends AppCompatActivity {
                             return;
                         }
                     }
+                    onRestart();
                 }
                 else{
                     Toast.makeText(MapActivity.this, "Fail to get location permission", Toast.LENGTH_SHORT).show();

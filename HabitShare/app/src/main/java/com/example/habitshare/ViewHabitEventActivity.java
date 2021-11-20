@@ -116,6 +116,7 @@ public class ViewHabitEventActivity extends AppCompatActivity {
                 if(imageURI != null){
                     intent.putExtra("image_uri", imageURI.toString());
                 }
+                intent.putExtra("location", location);
                 intent.putExtra("habit_title", habitTitle);
                 intent.putExtra("comment", comment);
                 intent.putExtra("denote_date", denoteDate);
@@ -156,7 +157,7 @@ public class ViewHabitEventActivity extends AppCompatActivity {
                                 if (lastTimeDenoted.equals(denoteDate)) {
                                     String habitTitle = doc.getId();
                                     HashMap<String, Object> data = new HashMap<>();
-                                    data.put("Status", true);
+                                    data.put("Status", false);
                                     data.put("Last Time Denoted", "");
 
                                     habitsReference.document(habitTitle)
@@ -191,8 +192,10 @@ public class ViewHabitEventActivity extends AppCompatActivity {
     }
 
     private void viewImage() {
-        Intent intent = new Intent(ViewHabitEventActivity.this, ViewLargerImageActivity.class);
-        intent.putExtra("image_uri", imageURI.toString());
-        startActivity(intent);
+        if(imageURI != null){
+            Intent intent = new Intent(ViewHabitEventActivity.this, ViewLargerImageActivity.class);
+            intent.putExtra("image_uri", imageURI.toString());
+            startActivity(intent);
+        }
     }
 }

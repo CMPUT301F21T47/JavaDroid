@@ -86,7 +86,6 @@ public class HabitEventsFragment extends Fragment {
                 intent.putExtra("denote_date", habitEvent.getDenoteDate());
                 intent.putExtra("event_title", habitEvent.getEvenTitle());
                 intent.putExtra("location", habitEvent.getLocation());
-                Log.d(TAG, habitEvent.getLocation());
 
                     try{
                         if(habitEvent.isHasImage()) {
