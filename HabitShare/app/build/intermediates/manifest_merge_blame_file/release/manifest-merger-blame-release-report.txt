@@ -1,0 +1,330 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.habitshare"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+8-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="31" />
+9-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+11-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:5:5-79
+11-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:5:22-76
+12    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+12-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:6:5-81
+12-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:6:22-78
+13    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+13-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:7:5-80
+13-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:7:22-77
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:8:5-67
+14-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:8:22-64
+15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:9:5-79
+15-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:9:22-76
+16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+16-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:10:5-76
+16-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:10:22-73
+17
+18    <uses-feature
+18-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:26:5-28:35
+19        android:glEsVersion="0x00020000"
+19-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:27:9-41
+20        android:required="true" />
+20-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:28:9-32
+21
+22    <queries>
+22-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:30:5-34:15
+23
+24        <!-- Needs to be explicitly declared on Android R+ -->
+25        <package android:name="com.google.android.apps.maps" />
+25-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:33:9-64
+25-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:33:18-61
+26    </queries>
+27
+28    <uses-permission android:name="android.permission.WAKE_LOCK" />
+28-->[com.google.android.gms:play-services-measurement-api:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\fdb2b51e25ea4396f35daa7345506c22\transformed\jetified-play-services-measurement-api-19.0.2\AndroidManifest.xml:24:5-68
+28-->[com.google.android.gms:play-services-measurement-api:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\fdb2b51e25ea4396f35daa7345506c22\transformed\jetified-play-services-measurement-api-19.0.2\AndroidManifest.xml:24:22-65
+29    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+29-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:26:5-110
+29-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:26:22-107
+30
+31    <application
+31-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:11:5-76:19
+32        android:name="androidx.multidex.MultiDexApplication"
+33        android:allowBackup="true"
+33-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:12:9-35
+34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+34-->[androidx.core:core:1.5.0] E:\Android\AndroidStudio\caches\transforms-3\094d811393390f43e527b1f0ea396da5\transformed\core-1.5.0\AndroidManifest.xml:24:18-86
+35        android:icon="@mipmap/ic_launcher_my_icon"
+35-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:13:9-51
+36        android:label="@string/app_name"
+36-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:14:9-41
+37        android:roundIcon="@mipmap/ic_launcher_round"
+37-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:15:9-54
+38        android:supportsRtl="true"
+38-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:16:9-35
+39        android:theme="@style/Theme.HabitShare" >
+39-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:17:9-48
+40        <activity
+40-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:18:9-21:44
+41            android:name="com.example.habitshare.MapActivity"
+41-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:19:13-40
+42            android:exported="false"
+42-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:20:13-37
+43            android:label="Pick Location" />
+43-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:21:13-42
+44        <activity
+44-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:22:9-25:48
+45            android:name="com.example.habitshare.ViewHabitEventActivity"
+45-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:23:13-51
+46            android:exported="false"
+46-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:24:13-37
+47            android:label="View Habit Event" />
+47-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:25:13-45
+48        <activity
+48-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:26:9-29:44
+49            android:name="com.example.habitshare.DenoteHabitActivity"
+49-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:27:13-48
+50            android:exported="false"
+50-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:28:13-37
+51            android:label="Denote Habit" />
+51-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:29:13-41
+52        <activity
+52-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:30:9-33:42
+53            android:name="com.example.habitshare.ViewHabitActivity"
+53-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:31:13-46
+54            android:exported="false"
+54-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:32:13-37
+55            android:label="View Habit" />
+55-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:33:13-39
+56        <activity
+56-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:34:9-37:41
+57            android:name="com.example.habitshare.AddHabitActivity"
+57-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:35:13-45
+58            android:exported="false"
+58-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:36:13-37
+59            android:label="Add Habit" />
+59-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:37:13-38
+60        <activity
+60-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:38:9-42:75
+61            android:name="com.example.habitshare.ViewLargerImageActivity"
+61-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:39:13-52
+62            android:exported="false"
+62-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:40:13-37
+63            android:label="View Image"
+63-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:41:13-39
+64            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+64-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:42:13-72
+65        <activity
+65-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:43:9-45:40
+66            android:name="com.example.habitshare.RegistrationActivity"
+66-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:44:13-49
+67            android:exported="false" />
+67-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:45:13-37
+68        <activity
+68-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:46:9-48:40
+69            android:name="com.example.habitshare.LoginActivity"
+69-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:47:13-42
+70            android:exported="false" />
+70-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:48:13-37
+71        <activity
+71-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:49:9-59:20
+72            android:name="com.example.habitshare.MainActivity"
+72-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:50:13-41
+73            android:exported="true"
+73-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:51:13-36
+74            android:label="@string/app_name"
+74-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:52:13-45
+75            android:theme="@style/Theme.HabitShare.NoActionBar" >
+75-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:53:13-64
+76            <intent-filter>
+76-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:54:13-58:29
+77                <action android:name="android.intent.action.MAIN" />
+77-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:55:17-69
+77-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:55:25-66
+78
+79                <category android:name="android.intent.category.LAUNCHER" />
+79-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:57:17-77
+79-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:57:27-74
+80            </intent-filter>
+81        </activity>
+82
+83        <meta-data
+83-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:61:9-63:57
+84            android:name="preloaded_fonts"
+84-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:62:13-43
+85            android:resource="@array/preloaded_fonts" />
+85-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:63:13-54
+86        <meta-data
+86-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:64:9-66:47
+87            android:name="com.google.android.geo.API_KEY"
+87-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:65:13-58
+88            android:value="@string/API_KEY" />
+88-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:66:13-44
+89
+90        <provider
+90-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:67:9-75:20
+91            android:name="androidx.core.content.FileProvider"
+91-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:68:13-62
+92            android:authorities="com.example.android.fileprovider"
+92-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:69:13-67
+93            android:exported="false"
+93-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:70:13-37
+94            android:grantUriPermissions="true" >
+94-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:71:13-47
+95            <meta-data
+95-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:72:13-74:54
+96                android:name="android.support.FILE_PROVIDER_PATHS"
+96-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:73:17-67
+97                android:resource="@xml/file_paths" />
+97-->E:\Android\ProjectFileBackup\JavaDroid\HabitShare\app\src\main\AndroidManifest.xml:74:17-51
+98        </provider>
+99
+100        <activity
+100-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:14:9-20:20
+101            android:name="com.google.android.libraries.places.widget.AutocompleteActivity"
+101-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:15:13-91
+102            android:exported="false"
+102-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:16:13-37
+103            android:label="@string/places_autocomplete_label"
+103-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:17:13-62
+104            android:theme="@style/PlacesAutocompleteOverlay"
+104-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:18:13-61
+105            android:windowSoftInputMode="adjustResize" >
+105-->[com.google.android.libraries.places:places:2.5.0] E:\Android\AndroidStudio\caches\transforms-3\42c35bda4fe59736fca7407889382e15\transformed\jetified-places-2.5.0\AndroidManifest.xml:19:13-55
+106        </activity> <!-- Needs to be explicitly declared on P+ -->
+107        <uses-library
+107-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:39:9-41:40
+108            android:name="org.apache.http.legacy"
+108-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:40:13-50
+109            android:required="false" />
+109-->[com.google.android.gms:play-services-maps:18.0.0] E:\Android\AndroidStudio\caches\transforms-3\2022025f7265035511897ebace1f6b90\transformed\jetified-play-services-maps-18.0.0\AndroidManifest.xml:41:13-37
+110
+111        <service
+111-->[com.google.firebase:firebase-firestore:24.0.0] E:\Android\AndroidStudio\caches\transforms-3\6b2226a29492897711a43e1f2c658696\transformed\jetified-firebase-firestore-24.0.0\AndroidManifest.xml:17:9-23:19
+112            android:name="com.google.firebase.components.ComponentDiscoveryService"
+112-->[com.google.firebase:firebase-firestore:24.0.0] E:\Android\AndroidStudio\caches\transforms-3\6b2226a29492897711a43e1f2c658696\transformed\jetified-firebase-firestore-24.0.0\AndroidManifest.xml:18:13-84
+113            android:directBootAware="true"
+113-->[com.google.firebase:firebase-common:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\22b725a2826645fa8ea42c830bff29eb\transformed\jetified-firebase-common-20.0.0\AndroidManifest.xml:35:13-43
+114            android:exported="false" >
+114-->[com.google.firebase:firebase-firestore:24.0.0] E:\Android\AndroidStudio\caches\transforms-3\6b2226a29492897711a43e1f2c658696\transformed\jetified-firebase-firestore-24.0.0\AndroidManifest.xml:19:13-37
+115            <meta-data
+115-->[com.google.firebase:firebase-firestore:24.0.0] E:\Android\AndroidStudio\caches\transforms-3\6b2226a29492897711a43e1f2c658696\transformed\jetified-firebase-firestore-24.0.0\AndroidManifest.xml:20:13-22:85
+116                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+116-->[com.google.firebase:firebase-firestore:24.0.0] E:\Android\AndroidStudio\caches\transforms-3\6b2226a29492897711a43e1f2c658696\transformed\jetified-firebase-firestore-24.0.0\AndroidManifest.xml:21:17-111
+117                android:value="com.google.firebase.components.ComponentRegistrar" />
+117-->[com.google.firebase:firebase-firestore:24.0.0] E:\Android\AndroidStudio\caches\transforms-3\6b2226a29492897711a43e1f2c658696\transformed\jetified-firebase-firestore-24.0.0\AndroidManifest.xml:22:17-82
+118            <meta-data
+118-->[com.google.firebase:firebase-storage:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\e404e054f027638cfed1b79792c86bb4\transformed\jetified-firebase-storage-20.0.0\AndroidManifest.xml:33:13-35:85
+119                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+119-->[com.google.firebase:firebase-storage:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\e404e054f027638cfed1b79792c86bb4\transformed\jetified-firebase-storage-20.0.0\AndroidManifest.xml:34:17-107
+120                android:value="com.google.firebase.components.ComponentRegistrar" />
+120-->[com.google.firebase:firebase-storage:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\e404e054f027638cfed1b79792c86bb4\transformed\jetified-firebase-storage-20.0.0\AndroidManifest.xml:35:17-82
+121            <meta-data
+121-->[com.google.android.gms:play-services-measurement-api:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\fdb2b51e25ea4396f35daa7345506c22\transformed\jetified-play-services-measurement-api-19.0.2\AndroidManifest.xml:30:13-32:85
+122                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+122-->[com.google.android.gms:play-services-measurement-api:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\fdb2b51e25ea4396f35daa7345506c22\transformed\jetified-play-services-measurement-api-19.0.2\AndroidManifest.xml:31:17-139
+123                android:value="com.google.firebase.components.ComponentRegistrar" />
+123-->[com.google.android.gms:play-services-measurement-api:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\fdb2b51e25ea4396f35daa7345506c22\transformed\jetified-play-services-measurement-api-19.0.2\AndroidManifest.xml:32:17-82
+124            <meta-data
+124-->[com.google.firebase:firebase-installations:17.0.0] E:\Android\AndroidStudio\caches\transforms-3\e55bc949fe4cd9f11fc6aabfc4e8865a\transformed\jetified-firebase-installations-17.0.0\AndroidManifest.xml:18:13-20:85
+125                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+125-->[com.google.firebase:firebase-installations:17.0.0] E:\Android\AndroidStudio\caches\transforms-3\e55bc949fe4cd9f11fc6aabfc4e8865a\transformed\jetified-firebase-installations-17.0.0\AndroidManifest.xml:19:17-127
+126                android:value="com.google.firebase.components.ComponentRegistrar" />
+126-->[com.google.firebase:firebase-installations:17.0.0] E:\Android\AndroidStudio\caches\transforms-3\e55bc949fe4cd9f11fc6aabfc4e8865a\transformed\jetified-firebase-installations-17.0.0\AndroidManifest.xml:20:17-82
+127        </service>
+128
+129        <provider
+129-->[com.google.firebase:firebase-common:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\22b725a2826645fa8ea42c830bff29eb\transformed\jetified-firebase-common-20.0.0\AndroidManifest.xml:26:9-31:39
+130            android:name="com.google.firebase.provider.FirebaseInitProvider"
+130-->[com.google.firebase:firebase-common:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\22b725a2826645fa8ea42c830bff29eb\transformed\jetified-firebase-common-20.0.0\AndroidManifest.xml:27:13-77
+131            android:authorities="com.example.habitshare.firebaseinitprovider"
+131-->[com.google.firebase:firebase-common:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\22b725a2826645fa8ea42c830bff29eb\transformed\jetified-firebase-common-20.0.0\AndroidManifest.xml:28:13-72
+132            android:directBootAware="true"
+132-->[com.google.firebase:firebase-common:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\22b725a2826645fa8ea42c830bff29eb\transformed\jetified-firebase-common-20.0.0\AndroidManifest.xml:29:13-43
+133            android:exported="false"
+133-->[com.google.firebase:firebase-common:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\22b725a2826645fa8ea42c830bff29eb\transformed\jetified-firebase-common-20.0.0\AndroidManifest.xml:30:13-37
+134            android:initOrder="100" />
+134-->[com.google.firebase:firebase-common:20.0.0] E:\Android\AndroidStudio\caches\transforms-3\22b725a2826645fa8ea42c830bff29eb\transformed\jetified-firebase-common-20.0.0\AndroidManifest.xml:31:13-36
+135
+136        <activity
+136-->[com.google.android.gms:play-services-base:17.5.0] E:\Android\AndroidStudio\caches\transforms-3\c1ff11674cff0077c3a060eeed225463\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:23:9-26:75
+137            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+137-->[com.google.android.gms:play-services-base:17.5.0] E:\Android\AndroidStudio\caches\transforms-3\c1ff11674cff0077c3a060eeed225463\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:24:13-79
+138            android:exported="false"
+138-->[com.google.android.gms:play-services-base:17.5.0] E:\Android\AndroidStudio\caches\transforms-3\c1ff11674cff0077c3a060eeed225463\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:25:13-37
+139            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+139-->[com.google.android.gms:play-services-base:17.5.0] E:\Android\AndroidStudio\caches\transforms-3\c1ff11674cff0077c3a060eeed225463\transformed\jetified-play-services-base-17.5.0\AndroidManifest.xml:26:13-72
+140
+141        <receiver
+141-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:29:9-33:20
+142            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+142-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:30:13-85
+143            android:enabled="true"
+143-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:31:13-35
+144            android:exported="false" >
+144-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:32:13-37
+145        </receiver>
+146
+147        <service
+147-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:35:9-38:40
+148            android:name="com.google.android.gms.measurement.AppMeasurementService"
+148-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:36:13-84
+149            android:enabled="true"
+149-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:37:13-35
+150            android:exported="false" />
+150-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:38:13-37
+151        <service
+151-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:39:9-43:72
+152            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+152-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:40:13-87
+153            android:enabled="true"
+153-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:41:13-35
+154            android:exported="false"
+154-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:42:13-37
+155            android:permission="android.permission.BIND_JOB_SERVICE" />
+155-->[com.google.android.gms:play-services-measurement:19.0.2] E:\Android\AndroidStudio\caches\transforms-3\54c49c7adeca36df228da2bf6912b610\transformed\jetified-play-services-measurement-19.0.2\AndroidManifest.xml:43:13-69
+156
+157        <meta-data
+157-->[com.google.android.gms:play-services-basement:17.5.0] E:\Android\AndroidStudio\caches\transforms-3\225fbba411ee5d4f2b320265706b1cc5\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:23:9-25:69
+158            android:name="com.google.android.gms.version"
+158-->[com.google.android.gms:play-services-basement:17.5.0] E:\Android\AndroidStudio\caches\transforms-3\225fbba411ee5d4f2b320265706b1cc5\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:24:13-58
+159            android:value="@integer/google_play_services_version" />
+159-->[com.google.android.gms:play-services-basement:17.5.0] E:\Android\AndroidStudio\caches\transforms-3\225fbba411ee5d4f2b320265706b1cc5\transformed\jetified-play-services-basement-17.5.0\AndroidManifest.xml:25:13-66
+160
+161        <service
+161-->[com.google.android.datatransport:transport-backend-cct:2.3.0] E:\Android\AndroidStudio\caches\transforms-3\f36365f75b1dfbd469334eb4d482a3a7\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:29:9-35:19
+162            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+162-->[com.google.android.datatransport:transport-backend-cct:2.3.0] E:\Android\AndroidStudio\caches\transforms-3\f36365f75b1dfbd469334eb4d482a3a7\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:30:13-103
+163            android:exported="false" >
+163-->[com.google.android.datatransport:transport-backend-cct:2.3.0] E:\Android\AndroidStudio\caches\transforms-3\f36365f75b1dfbd469334eb4d482a3a7\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:31:13-37
+164            <meta-data
+164-->[com.google.android.datatransport:transport-backend-cct:2.3.0] E:\Android\AndroidStudio\caches\transforms-3\f36365f75b1dfbd469334eb4d482a3a7\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:32:13-34:39
+165                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+165-->[com.google.android.datatransport:transport-backend-cct:2.3.0] E:\Android\AndroidStudio\caches\transforms-3\f36365f75b1dfbd469334eb4d482a3a7\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:33:17-94
+166                android:value="cct" />
+166-->[com.google.android.datatransport:transport-backend-cct:2.3.0] E:\Android\AndroidStudio\caches\transforms-3\f36365f75b1dfbd469334eb4d482a3a7\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:34:17-36
+167        </service>
+168        <service
+168-->[com.google.android.datatransport:transport-runtime:2.2.3] E:\Android\AndroidStudio\caches\transforms-3\818826e03cfbfcd7dedc0cdf7312b6dc\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:26:9-30:19
+169            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+169-->[com.google.android.datatransport:transport-runtime:2.2.3] E:\Android\AndroidStudio\caches\transforms-3\818826e03cfbfcd7dedc0cdf7312b6dc\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:27:13-117
+170            android:exported="false"
+170-->[com.google.android.datatransport:transport-runtime:2.2.3] E:\Android\AndroidStudio\caches\transforms-3\818826e03cfbfcd7dedc0cdf7312b6dc\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:28:13-37
+171            android:permission="android.permission.BIND_JOB_SERVICE" >
+171-->[com.google.android.datatransport:transport-runtime:2.2.3] E:\Android\AndroidStudio\caches\transforms-3\818826e03cfbfcd7dedc0cdf7312b6dc\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:29:13-69
+172        </service>
+173
+174        <receiver
+174-->[com.google.android.datatransport:transport-runtime:2.2.3] E:\Android\AndroidStudio\caches\transforms-3\818826e03cfbfcd7dedc0cdf7312b6dc\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:32:9-34:40
+175            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+175-->[com.google.android.datatransport:transport-runtime:2.2.3] E:\Android\AndroidStudio\caches\transforms-3\818826e03cfbfcd7dedc0cdf7312b6dc\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:33:13-132
+176            android:exported="false" />
+176-->[com.google.android.datatransport:transport-runtime:2.2.3] E:\Android\AndroidStudio\caches\transforms-3\818826e03cfbfcd7dedc0cdf7312b6dc\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:34:13-37
+177    </application>
+178
+179</manifest>
