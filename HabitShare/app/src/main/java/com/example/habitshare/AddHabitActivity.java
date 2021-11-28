@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,8 @@ import java.util.HashMap;
 
 public class AddHabitActivity extends AppCompatActivity {
     private final static String TAG = "showAddHabitActivity";
+
+    // view variables
     EditText enterHabitTitle;
     EditText enterReason;
     Button  selectDate;
@@ -44,10 +48,15 @@ public class AddHabitActivity extends AppCompatActivity {
     CheckBox sunCheckBox;
     TextView dateView;
     TextView textViewSelectDaysOfAWeek;
+    Switch switchSetPublic;
+
+    // data variables
     FirebaseFirestore db;
     DatePickerDialog.OnDateSetListener dateSetListener;
     String date;
     boolean checkConfirmCondition;
+    boolean status;
+    boolean isDisclosed = false;
     int position;
     String previousTitle;
     String habitTitle;
@@ -75,24 +84,38 @@ public class AddHabitActivity extends AppCompatActivity {
         friCheckBox = findViewById(R.id.checkBox_friday);
         satCheckBox = findViewById(R.id.checkBox_saturday);
         sunCheckBox = findViewById(R.id.checkBox_sunday);
+        switchSetPublic = findViewById(R.id.switch_set_public);
 
         Intent intent = getIntent();
         int requestCode = intent.getIntExtra("request_code", 0);
         position = intent.getIntExtra("position", 0);
+        loadingDialog = new LoadingDialog(AddHabitActivity.this);
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("UserData")
+                .document(MainActivity.email)
+                .collection("Habits");
 
+        // when the app enters here to edit a habit, we need to put the origin details into the corresponding edittexts and checkboxes
         if(requestCode == 1){
+            // get data from intent
             habitTitle = intent.getStringExtra("habit_title");
             date = intent.getStringExtra("date");
             reason = intent.getStringExtra("reason");
             daysOfWeek = intent.getStringExtra("days_of_week");
             lastTimeDenoted = intent.getStringExtra("last_time_denoted");
+            status = intent.getBooleanExtra("status", false);
+            isDisclosed = intent.getBooleanExtra("is_disclosed", false);
 
-            previousTitle = habitTitle;
+            previousTitle = habitTitle; // keep a copy of the original title, so that later we can check if the title has been changed or not
             Habit habit = new Habit(habitTitle, date, reason, daysOfWeek);
             boolean[] daysOfWeekList = habit.getSelectDayOfWeekList();
+
+            // set edittext according to the detail of the habit
             enterHabitTitle.setText(habitTitle);
             enterReason.setText(reason);
             dateView.setText(date);
+
+            // set checkbox status according to the detail of the habit
             for(int j = 0; j < daysOfWeekList.length; j++){
                 if (daysOfWeekList[j]) {
                     switch (j) {
@@ -119,30 +142,37 @@ public class AddHabitActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            // set the status of the switch for set public
+            switchSetPublic.setChecked(isDisclosed);
         }
 
-        loadingDialog = new LoadingDialog(AddHabitActivity.this);
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("UserData")
-                .document(MainActivity.email)
-                .collection("Habits");
-
         setDate();
+
+        switchSetPublic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    isDisclosed = true;
+                }
+                else{
+                    isDisclosed = false;
+                }
+            }
+        });
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textViewSelectDaysOfAWeek.setTextColor(Color.BLACK);
-                checkConfirmCondition = true;
+                checkConfirmCondition = true; // a flag to show whether the input is valid or not
                 final String habitTitle = enterHabitTitle.getText().toString();
                 final String reason = enterReason.getText().toString();
                 final String date = dateView.getText().toString();
                 Habit habit = new Habit(habitTitle, date);
                 setSelectedDays(habit);
                 daysOfWeek = habit.getSelectDayOfWeek();
-                // Check constraints of user input
-                Log.d(TAG, "Reached here");
-                // check other constraints
+                // check input constraints
                 if (date.equals("yyyy-mm-dd")) {
                     Snackbar.make(findViewById(R.id.add_habit), "Please select a date", Snackbar.LENGTH_INDEFINITE)
                             .setAction("Set a Date", new View.OnClickListener() {
@@ -159,12 +189,10 @@ public class AddHabitActivity extends AppCompatActivity {
                     setSelectDaysSnackBar.show();
                     checkConfirmCondition = false;
                 }
-
                 if (reason.equals("")) {
                     enterReason.setError("Reason cannot be empty");
                     checkConfirmCondition = false;
                 }
-
                 if (habitTitle.length() > 20) {
                     enterHabitTitle.setError("Cannot longer than 20 characters");
                     checkConfirmCondition = false;
@@ -176,6 +204,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     enterHabitTitle.setError("Habit Title cannot be empty");
                     checkConfirmCondition = false;
                 } else {
+                    // when the app enters here to add a habit, then simply upload all the info of a habit
                     if (requestCode == 0) {
                         loadingDialog.startLoadingDialog();
                         collectionReference.document(habitTitle).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -198,6 +227,7 @@ public class AddHabitActivity extends AppCompatActivity {
                                             data.put("Status", false);
                                             data.put("Last Time Denoted", "");
                                             data.put("Position", position);
+                                            data.put("IsDisclosed", isDisclosed);
                                             collectionReference
                                                     .document(habitTitle)
                                                     .set(data)
@@ -220,21 +250,27 @@ public class AddHabitActivity extends AppCompatActivity {
 
                             }
                         });
-                    } else {
+                    }
+                    else {
                         if (checkConfirmCondition) {
                             HashMap<String, Object> data = new HashMap<>();
                             data.put("Date of Start", date);
                             data.put("Days of Week", daysOfWeek);
                             data.put("Reason", reason);
-                            data.put("Status", false);
+                            data.put("Status", status);
                             data.put("Last Time Denoted", lastTimeDenoted);
                             data.put("Position", position);
+                            data.put("IsDisclosed", isDisclosed);
+
+                            // if the app enters here to edit a habit, then we need to check if the title has been changed or not
                             if(!habitTitle.equals(previousTitle)){
                                 collectionReference.document(habitTitle).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         lastTimeDenoted = documentSnapshot.getString("Last Time Denoted");
                                         data.put("Last Time Denoted", lastTimeDenoted);
+
+                                        // if the the title has been changed, we need to delete the previous document on Firebase
                                         collectionReference
                                                 .document(previousTitle)
                                                 .delete();

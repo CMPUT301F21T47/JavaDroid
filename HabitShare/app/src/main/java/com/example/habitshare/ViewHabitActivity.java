@@ -23,23 +23,27 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 
 public class ViewHabitActivity extends AppCompatActivity {
+    // view variables
     TextView viewHabitTitle;
     TextView viewDate;
     TextView viewDaysOfWeek;
     TextView viewReason;
+    TextView viewIsDisclosed;
     Button delete;
     Button cancelViewHabit;
     Button editHabit;
     Button denoteHabit;
+
+    // data variables
     FirebaseFirestore db;
-    DatePickerDialog.OnDateSetListener dateSetListener;
     String date;
-    boolean checkConfirmCondition;
     String habitTitle;
     String reason;
     String daysOfWeek;
     String lastTimeDenoted;
     boolean status;
+    boolean isDisclosed;
+    int controlCode;
     int position;
     int listSize;
     int i;
@@ -53,6 +57,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         viewDate = findViewById(R.id.view_date_view_habit);
         viewDaysOfWeek = findViewById(R.id.view_days_of_week);
         viewReason = findViewById(R.id.view_reason);
+        viewIsDisclosed = findViewById(R.id.view_is_disclosed);
         delete = findViewById(R.id.button_delete_view_habit);
         cancelViewHabit = findViewById(R.id.button_cancel_view_habit);
         editHabit = findViewById(R.id.button_edit_habit);
@@ -77,12 +82,21 @@ public class ViewHabitActivity extends AppCompatActivity {
         lastTimeDenoted = intent.getStringExtra("last_time_denoted");
         position = intent.getIntExtra("position", 0);
         listSize = intent.getIntExtra("list_size", 0);
+        isDisclosed = intent.getBooleanExtra("is_disclosed", false);
+        controlCode = intent.getIntExtra("control_code", 0);
+
+        if(controlCode == 1){
+            denoteHabit.setVisibility(View.INVISIBLE);
+            delete.setVisibility(View.INVISIBLE);
+            editHabit.setVisibility(View.INVISIBLE);
+        }
 
         // set texts according to the attributes of the selected habit.
         viewHabitTitle.setText(habitTitle);
         viewDate.setText(date);
         viewDaysOfWeek.setText(daysOfWeek);
         viewReason.setText(reason);
+        viewIsDisclosed.setText(String.valueOf(isDisclosed));
 
         // if a habit has been done this week then there shouldn't be a denote button for this habit
         if(status){
@@ -112,6 +126,8 @@ public class ViewHabitActivity extends AppCompatActivity {
                 intent.putExtra("last_time_denoted", lastTimeDenoted);
                 intent.putExtra("request_code", 1);
                 intent.putExtra("position", position);
+                intent.putExtra("status", status);
+                intent.putExtra("is_disclosed", isDisclosed);
                 startActivity(intent);
                 finish();
             }
