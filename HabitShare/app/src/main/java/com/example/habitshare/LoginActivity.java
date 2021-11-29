@@ -54,13 +54,14 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = enterPassword.getText().toString();
                 Log.d(TAG, "Password is " + password);
 
+                // Check the input validity
                 if(email.equals("")){
                     enterEmail.setError("Email address cannot be empty");
                 }
                 if(password.equals("")){
                     enterPassword.setError("Password cannot be empty");
                 }
-                if(!email.equals("")){
+                if(!email.equals("")){ // check the existence of the account
                     loadAnimation.startLoadingDialog();
                     collectionReference.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -92,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(TAG, "get failed with ", task.getException());
                                 loadAnimation.dismissLoadingDialog();
                                 showToast("Error: Failed to get data");
-
                             }
                         }
                     });

@@ -10,5 +10,11 @@
         <item
             android:id="@+id/nav_habit_events"
             android:title="Habit Events" />
+        <item
+            android:id="@+id/nav_friends"
+            android:title="Friends" />
+        <item
+            android:id="@+id/nav_friend_requests"
+            android:title="Friend Requests" />
     </group>
 </menu>

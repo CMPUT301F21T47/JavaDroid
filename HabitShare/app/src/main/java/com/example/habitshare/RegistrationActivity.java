@@ -103,6 +103,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 }
                                 else {
                                     Log.d(TAG, "No such document");
+
                                     // If everything is fine, then we complete a successful registration
                                     Log.d(TAG, "Before the if statement");
                                     if(isValidEmail(email) && isValidPassword(password) && !userName.equals("") && password.equals(password2)){

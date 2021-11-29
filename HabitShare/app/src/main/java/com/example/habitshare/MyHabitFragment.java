@@ -121,7 +121,7 @@ public class MyHabitFragment extends Fragment{
         buttonConfirmReorder.setVisibility(View.INVISIBLE);
 //        Log.d("MyHabitsFragment", habit.getTitle());
         todayHabitDataList = new ArrayList<>();
-        habitRecyclerView = view.findViewById(R.id.my_habit_list);
+        habitRecyclerView = view.findViewById(R.id.friend_habit_list);
         habitDataList = new ArrayList<>();
 //        Habit habit = new Habit("Study", "2021-09-01");
 //        habitDataList.add(habit);
@@ -288,6 +288,7 @@ public class MyHabitFragment extends Fragment{
                 intent.putExtra("status", habit.getStatus());
                 intent.putExtra("last_time_denoted", habit.getLastTimeDenoted());
                 intent.putExtra("position", position);
+                intent.putExtra("is_disclosed", habit.getIsDisclosed());
                 startActivity(intent);
             }
         });
@@ -349,6 +350,7 @@ public class MyHabitFragment extends Fragment{
                                 String reason = (String) doc.getData().get("Reason");
                                 String lastTimeDenoted = (String) doc.getData().get("Last Time Denoted");
                                 boolean status = (boolean) doc.getData().get("Status");
+                                boolean isDisclosed = (boolean) doc.getData().get("IsDisclosed");
                                 Integer position = ((Long) doc.getData().get("Position")).intValue();
                                 //Log.d(TAG, "title is " + habitTitle);
 //                            Log.d(TAG, "date is "  + date);
@@ -357,6 +359,12 @@ public class MyHabitFragment extends Fragment{
                                 Habit habit = new Habit(habitTitle, date, reason, daysOfWeek);
                                 habit.setStatus(status);
                                 habit.setLastTimeDenoted(lastTimeDenoted);
+                                if(isDisclosed){
+                                    habit.setPublic();
+                                }
+                                else{
+                                    habit.setPrivate();
+                                }
                                 orderMap.put(position, habit);
                                 habitDataList.add(habit);
                             }

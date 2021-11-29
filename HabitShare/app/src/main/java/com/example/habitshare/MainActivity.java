@@ -37,11 +37,11 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     public static String email; // This is the unique key to access user's data
+    public static String userName;
     public static Uri imageURI;
     private static final int REQUEST_LOGIN = 1;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    String userName;
     FirebaseFirestore db;
     final static String TAG = "MainActivity";
     DocumentSnapshot userDocument;
