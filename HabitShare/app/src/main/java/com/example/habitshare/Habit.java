@@ -13,6 +13,9 @@ public class Habit{
     private boolean[] daysOfWeekList = new boolean[7];
     private boolean status;
 
+    private int timesDone = 0;
+    private int timesNotDone = 0;
+
     /**
      * Habit constructor
      * @param title habit title
@@ -261,4 +264,21 @@ public class Habit{
     public void setLastTimeDenoted(String lastTimeDenoted) {
         this.lastTimeDenoted = lastTimeDenoted;
     }
+
+    public void addTimesDone(){
+        timesDone += 1;
+    }//end addTimesDone
+
+    public void subTimesDone(){
+        timesDone -= 1;
+    }//end subTimesDone
+
+    public void addTimesNotDone(){
+        timesNotDone += 1;
+    }//end addTimesNotDone
+
+    public void subTimesNotDone(){
+        timesNotDone -= 1;
+    }//end subTimesNotDone
+
 }

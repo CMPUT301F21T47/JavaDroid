@@ -2,6 +2,7 @@ package com.example.habitshare;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class MyHabitFragment extends Fragment{
     View view;
     SwitchMaterial switchTodayAll;
     private RecyclerView habitRecyclerView;
-    private ArrayList<Habit> habitDataList;
+    private static ArrayList<Habit> habitDataList;
     private CustomHabitListAdapter habitAdapter;
     private ArrayList<Habit> todayHabitDataList;
     int i;
@@ -77,6 +78,38 @@ public class MyHabitFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        /**
+         * To keep a tally of each time a habit is done or not when the day rolls over,
+         * so it can display to the user how closely they've been following their habits
+         */
+        /*
+        //A potential alternative if the job scheduler doesn't work as intended
+        Calendar calendar = Calendar.getInstance();
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+        SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
+        int lastDay = settings.getInt("day", 0);
+
+        if (lastDay == currentDay){ // Is it a new day?
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("day", currentDay);
+            editor.commit();
+
+            for(int i = 0; i < habitDataList.size(); i++){
+                Habit currentHabit = habitDataList.get(i);
+
+                if (currentHabit.getIsDenoted()){
+                    currentHabit.addTimesDone();
+                } else {
+                    currentHabit.addTimesNotDone();
+                }
+
+                currentHabit.setIsDenoted(false);
+
+            }//end for
+        }//end if
+         */
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_my_habits, container, false);
         addHabitButton = view.findViewById(R.id.button_add_habit);
@@ -360,7 +393,11 @@ public class MyHabitFragment extends Fragment{
         }
     }
 
-//    /**
+    public static ArrayList<Habit> getHabitDataList() {
+        return habitDataList;
+    }
+
+    //    /**
 //     * starts an add habit dialog
 //     */
 //    private void showAddHabitDialog(){
